@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arbol\Entorno.cs" />
+    <Compile Include="Arbol\Expresion.cs" />
+    <Compile Include="Arbol\Instruccion.cs" />
+    <Compile Include="Arbol\NodoAST.cs" />
+    <Compile Include="Arbol\Simbolo.cs" />
+    <Compile Include="Arbol\Tipos.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Expresiones\" />
+    <Folder Include="Instrucciones\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
