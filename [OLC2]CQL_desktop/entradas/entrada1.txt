@@ -1,0 +1,32 @@
+Create type Estudiante(
+	carnet int,
+	nombre String
+);
+
+Create type if not exists Perro(
+	peso double,
+	raza String,
+	es_macho boolean
+);
+
+Estudiante @est;
+Estudiante @est10, @est20, @es30;
+@est = new Estudiante;
+Estudiante @est2 = new Estudiante;
+Estudiante @est3 = {201504481, "Julio Arango", 20.72};
+
+int @var1 = @est3.carnet;
+double @var2, @var3, @var4 = @est3.alumno.edad;
+
+Alter type Estudiante Add(
+  cui int,
+  direccion string
+);
+
+Alter type Estudiante Delete(
+	carnet,
+	direccion
+);
+
+Delete type Estudiante;
+
