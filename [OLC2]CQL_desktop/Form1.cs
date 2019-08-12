@@ -1,4 +1,5 @@
-﻿using _OLC2_CQL_desktop.Inteprete;
+﻿using _OLC2_CQL_desktop.Arbol;
+using _OLC2_CQL_desktop.Inteprete;
 using Irony.Parsing;
 using System;
 using System.IO;
@@ -60,6 +61,23 @@ namespace _OLC2_CQL_desktop
                     MessageBox.Show("Cadena valida");
                     Grafica j = new Grafica();
                     j.graficar(arbol.Root);
+                    ConstructorAST constructorAST = new ConstructorAST();
+                    AST ast = constructorAST.Analizar(arbol.Root);
+                    if(ast != null)
+                    {
+                        Entorno global = new Entorno();
+                        foreach(INodoAST ins in ast.instrucciones)
+                        {
+                            if(ins is IInstruccion)
+                            {
+                                ((IInstruccion)ins).Ejecutar(global);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se logro construir el AST :(");
+                    }
                 }
                 else
                 {

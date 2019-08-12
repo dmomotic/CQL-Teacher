@@ -1,0 +1,8 @@
+/*print(1);
+print("que pez D:");
+print(12.75);*/
+
+//int @a, @b, @c;
+
+int @d, @e = 5;
+print(@e);

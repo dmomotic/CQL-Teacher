@@ -4,6 +4,5 @@
     {
         object GetValor(Entorno e);
         Tipos GetTipo(Entorno e);
-
     }
 }

@@ -14,6 +14,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 r_double = ToTerm("double"),
                 r_string = ToTerm("string"),
                 r_boolean = ToTerm("boolean"),
+                r_true = ToTerm("true"),
+                r_false = ToTerm("false"),
                 r_date = ToTerm("date"),
                 r_time = ToTerm("time"),
                 r_create = ToTerm("create"),
@@ -25,7 +27,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 r_null = ToTerm("null"), 
                 r_alter = ToTerm("alter"),
                 r_add = ToTerm("add"),
-                r_delete = ToTerm("delete")
+                r_delete = ToTerm("delete"),
+                r_print = ToTerm("print")
             ;
 
             //Le indicamos al parser las palabras reservadas, para evitar conflictos al reconocer ids
@@ -47,7 +50,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 "null",
                 "alter",
                 "add",
-                "delete"
+                "delete",
+                "print"
             );
 
             /*** SIMBOLOS DEL LENGUAJE ***/
@@ -102,24 +106,31 @@ namespace _OLC2_CQL_desktop.Inteprete
                 ALTER_TYPE = new NonTerminal("ALTER_TYPE"),
                 DELETE_TYPE = new NonTerminal("DELETE_TYPE"),
                 LISTA_IDS = new NonTerminal("LISTA_IDS"),
-                LISTA_IDS_ARR = new NonTerminal("LISTA_IDS_ARR"), 
-                ID_ARR = new NonTerminal("ID_ARR")
+                LISTA_IDS_ARR = new NonTerminal("LISTA_IDS_ARR"),
+                ID_ARR = new NonTerminal("ID_ARR"),
+                PRINT = new NonTerminal("PRINT"),
+                EXPRESION_ARITMETICA = new NonTerminal("EXPRESION_ARITMETICA"),
+                LITERAL = new NonTerminal("LITERAL")
+            
             ;
 
             #endregion
 
             #region GRAMATICA
 
-            INICIO.Rule = INSTRUCCIONES;
+            INICIO.Rule = INSTRUCCIONES; // ya
 
-            INSTRUCCIONES.Rule = MakePlusRule(INSTRUCCIONES, INSTRUCCION);
+            INSTRUCCIONES.Rule = MakePlusRule(INSTRUCCIONES, INSTRUCCION); //ya
 
             INSTRUCCION.Rule = CREACION_TIPO
                 | DECLARACION
                 | ASIGNACION
                 | ALTER_TYPE
                 | DELETE_TYPE
+                | PRINT //ya
                 ;
+
+            PRINT.Rule = r_print + parizq + EXPRESION + parder + ptocoma ; //ya
 
             CREACION_TIPO.Rule = r_create + r_type + id + parizq + LISTA_ATRIBUTOS + parder + ptocoma
                 | r_create + r_type + r_if + r_not + r_exists + id + parizq + LISTA_ATRIBUTOS + parder + ptocoma
@@ -142,19 +153,31 @@ namespace _OLC2_CQL_desktop.Inteprete
             DECLARACION.Rule = id + LISTA_IDS_ARR + ptocoma //Estudiante @est;
                 | id + LISTA_IDS_ARR + igual + r_new + id + ptocoma // Estudiante @est = new Estudiante;
                 | id + LISTA_IDS_ARR + igual + llavizq + LISTA_EXPRESIONES + llavder + ptocoma //Estudiante @est = {valores};
-                | TIPO_DATO + LISTA_IDS_ARR + igual + EXPRESION + ptocoma //int @carnet = cualquiercosa;
-                | TIPO_DATO + LISTA_IDS_ARR + ptocoma //int @carnet;
+                | TIPO_DATO + LISTA_IDS_ARR + igual + EXPRESION + ptocoma //int @carnet = cualquiercosa; - primitivos ya
+                | TIPO_DATO + LISTA_IDS_ARR + ptocoma //int @carnet; - ya 
                 ;
 
             ASIGNACION.Rule = arroba + id + igual + r_new + id + ptocoma //@est = new Estudiante;
                 | arroba + id + igual + llavizq + LISTA_EXPRESIONES + llavder + ptocoma // @est = new {valores};
                 ;
 
-            EXPRESION.Rule = entero
-                | _decimal
-                | id
-                | cadena
+            EXPRESION.Rule = EXPRESION_ARITMETICA
+                | LITERAL 
                 | ACCESO_OBJETO
+                ;
+
+            LITERAL.Rule = entero //ya
+                | _decimal //ya
+                | arroba + id //ya
+                | cadena //ya
+                | r_true //ya
+                | r_false //ya
+                ;
+
+            EXPRESION_ARITMETICA.Rule = EXPRESION + mas + EXPRESION
+                | EXPRESION + menos + EXPRESION
+                | EXPRESION + por + EXPRESION
+                | EXPRESION + div + EXPRESION
                 ;
 
             LISTA_EXPRESIONES.Rule = MakePlusRule(LISTA_EXPRESIONES, coma, EXPRESION); //5,"hola",true
@@ -180,18 +203,19 @@ namespace _OLC2_CQL_desktop.Inteprete
 
 
             /*** PRECEDENCIAS ***/
-            //RegisterOperators(5, Associativity.Left, mas, menos);
-            //RegisterOperators(6, Associativity.Left, por, div);
+            RegisterOperators(5, Associativity.Left, mas, menos);
+            RegisterOperators(6, Associativity.Left, por, div);
 
             /*** SIMBOLOS QUE NO ME SON DE UTILIDAD EN EL ARBOL ***/
             MarkPunctuation(
                 ptocoma, parizq, parder, arroba, igual, llavizq, llavder, coma,
-                r_create, r_type, r_if, r_not, r_new, r_alter, r_delete, r_add
+                r_create, r_type, r_if, r_not, r_new, r_alter, r_delete, r_add,
+                r_print
             );
 
             /*** NODOS QUE NO ME SON DE UTILIDAD EN EL ARBOL ***/
             MarkTransient(
-                INICIO, INSTRUCCION, TIPO_DATO, EXPRESION, ACCESOS_OBJETO, ID_ARR
+                INICIO, INSTRUCCION, TIPO_DATO, ACCESOS_OBJETO, ID_ARR, EXPRESION
             );
 
 

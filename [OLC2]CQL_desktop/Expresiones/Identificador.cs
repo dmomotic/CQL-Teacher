@@ -1,0 +1,45 @@
+﻿using _OLC2_CQL_desktop.Arbol;
+using System;
+
+namespace _OLC2_CQL_desktop.Expresiones
+{
+    class Identificador : IExpresion
+    {
+
+        readonly string id;
+
+        public Identificador(string id)
+        {
+            this.id = id;
+        }
+
+        public object GetValor(Entorno e)
+        {
+            Simbolo s = e.Obtener(id);
+            if (s == null)
+            {
+                Console.WriteLine("No se puede encontrar el id " + id + " en este entorno");
+                return null;
+            }
+            //Si se encontro el simbolo
+            return s.valor;
+        }
+
+        public Tipos GetTipo(Entorno e)
+        {
+            Simbolo s = e.Obtener(id);
+            if (s != null)
+            {
+                object valor = s.valor;
+                if (valor != null)
+                {
+                    if (valor is int) return Tipos.INT;
+                    if (valor is double) return Tipos.DOUBLE;
+                    if (valor is bool) return Tipos.DOUBLE;
+                    if (valor is string) return Tipos.STRING;
+                }
+            }
+            return Tipos.NULL;
+        }
+    }
+}
