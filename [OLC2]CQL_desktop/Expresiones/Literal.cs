@@ -24,7 +24,7 @@ namespace _OLC2_CQL_desktop.Expresiones
             }
             else if (valor is bool)
             {
-                return Tipos.DOUBLE;
+                return Tipos.BOOLEAN;
             }
             else if(valor is string)
             {

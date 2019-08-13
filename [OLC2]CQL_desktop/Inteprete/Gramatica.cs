@@ -159,10 +159,11 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             ASIGNACION.Rule = arroba + id + igual + r_new + id + ptocoma //@est = new Estudiante;
                 | arroba + id + igual + llavizq + LISTA_EXPRESIONES + llavder + ptocoma // @est = new {valores};
-                ;
+                | arroba + id + igual + EXPRESION + ptocoma //@var = 5+"hola"; - primitivos ya
+               ;
 
             EXPRESION.Rule = EXPRESION_ARITMETICA
-                | LITERAL 
+                | LITERAL //ya
                 | ACCESO_OBJETO
                 ;
 
@@ -174,10 +175,10 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | r_false //ya
                 ;
 
-            EXPRESION_ARITMETICA.Rule = EXPRESION + mas + EXPRESION
-                | EXPRESION + menos + EXPRESION
-                | EXPRESION + por + EXPRESION
-                | EXPRESION + div + EXPRESION
+            EXPRESION_ARITMETICA.Rule = EXPRESION + mas + EXPRESION //ya
+                | EXPRESION + menos + EXPRESION //ya
+                | EXPRESION + por + EXPRESION //ya
+                | EXPRESION + div + EXPRESION //ya
                 ;
 
             LISTA_EXPRESIONES.Rule = MakePlusRule(LISTA_EXPRESIONES, coma, EXPRESION); //5,"hola",true

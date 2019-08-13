@@ -25,6 +25,7 @@ namespace _OLC2_CQL_desktop.Arbol
                 if (s != null)
                 {
                     Console.WriteLine("Error!!, ya existe declarada una variable con id: " + simbolo.identificador);
+                    return;
                 }
             }
             this.Add(simbolo.identificador,simbolo);

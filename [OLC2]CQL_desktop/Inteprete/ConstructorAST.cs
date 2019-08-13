@@ -58,12 +58,12 @@ namespace _OLC2_CQL_desktop.Inteprete
                     return new Literal(aux);
                 }
 
-                if(SoyElNodo("true", actual.ChildNodes[0]))
+                if(GetLexema(actual,0).Equals("true", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     return new Literal(true);
                 }
 
-                if(SoyElNodo("false", actual.ChildNodes[0]))
+                if(GetLexema(actual, 0).Equals("false", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     return new Literal(false);
                 }
@@ -77,7 +77,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 return null;
             }
 
-            if (SoyElNodo("DECLARACION", actual))
+            if(SoyElNodo("DECLARACION", actual))
             {
                 int numero_hijos = actual.ChildNodes.Count;
 
@@ -99,6 +99,31 @@ namespace _OLC2_CQL_desktop.Inteprete
                 }
             }
 
+            if(SoyElNodo("ASIGNACION", actual)){
+                int numero_hijos = actual.ChildNodes.Count;
+
+                //id exp
+                if (numero_hijos == 2)
+                {
+                    string id = GetLexema(actual,0);
+                    IExpresion valor = (IExpresion)Recorrer(actual.ChildNodes[1]);
+                    return new Asignacion(id, valor);
+                }
+            }
+
+            if (SoyElNodo("EXPRESION_ARITMETICA", actual))
+            {
+                int numero_hijos = actual.ChildNodes.Count;
+
+                //exp op exp
+                if (numero_hijos == 3)
+                {
+                    IExpresion opIzq = (IExpresion)Recorrer(actual.FirstChild);
+                    Operaciones operacion = GetOperacion(actual.ChildNodes[1]);
+                    IExpresion opDer = (IExpresion)Recorrer(actual.LastChild);
+                    return new Aritmetica(opIzq,operacion,opDer);
+                }
+            }
 
             return null;
         }
@@ -123,6 +148,12 @@ namespace _OLC2_CQL_desktop.Inteprete
         private string GetLexema(ParseTreeNode padre, int posicion)
         {
             return padre.ChildNodes[posicion].Token.Text;
+        }
+
+        /*Devuelve el lexema de un nodo enviado como parametro*/
+        private string GetLexema(ParseTreeNode nodo)
+        {
+            return nodo.Token.Text;
         }
 
         /**
@@ -153,7 +184,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 return Tipos.STRING;
             }
 
-            return Tipos.OBJETO;
+            return Tipos.STRUCT;
         }
 
         /**
@@ -174,6 +205,22 @@ namespace _OLC2_CQL_desktop.Inteprete
                 ids.AddLast(hijo.Token.Text);
             }
             return ids;
+        }
+
+        private Operaciones GetOperacion(ParseTreeNode nodo)
+        {
+            switch (GetLexema(nodo))
+            {
+                case "+":
+                    return Operaciones.SUMA;
+                case "-":
+                    return Operaciones.RESTA;
+                case "*":
+                    return Operaciones.MULTIPLICACION;
+                case "/":
+                    return Operaciones.DIVISION;
+            }
+            return Operaciones.SUMA;
         }
 
 

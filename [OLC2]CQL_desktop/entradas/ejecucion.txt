@@ -1,8 +1,23 @@
+int @a = 5*3+10/2-1;
+print(@a);
+
+double @b = 5+7.5;
+print(@b);
+
+string @c = 1 + ".- Opcion " + 17.5;
+print(@c);
+
+
 /*print(1);
 print("que pez D:");
 print(12.75);*/
 
 //int @a, @b, @c;
 
-int @d, @e = 5;
+/*int @d, @e = 5;
 print(@e);
+boolean @f = true;
+print(@f);
+@f = false;
+print(@f);
+@h = true;*/
