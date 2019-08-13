@@ -76,6 +76,7 @@
     <Compile Include="Structs\AccesoObjeto.cs" />
     <Compile Include="Structs\AsignacionAtributo.cs" />
     <Compile Include="Structs\DeclaracionStruct.cs" />
+    <Compile Include="Structs\DeclaracionStructComoAtributo.cs" />
     <Compile Include="Structs\DefinicionStruct.cs" />
     <Compile Include="Structs\Objeto.cs" />
     <Compile Include="Structs\Struct.cs" />

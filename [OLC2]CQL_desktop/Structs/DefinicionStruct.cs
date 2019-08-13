@@ -9,17 +9,17 @@ namespace _OLC2_CQL_desktop.Structs
     {
 
         readonly string id;
-        readonly LinkedList<Declaracion> declaraciones;
+        readonly LinkedList<IInstruccion> declaraciones;
         readonly bool notExistsValidation;
 
 
-        public DefinicionStruct(string id, LinkedList<Declaracion> declaraciones)
+        public DefinicionStruct(string id, LinkedList<IInstruccion> declaraciones)
         {
             this.id = id;
             this.declaraciones = declaraciones;
         }
 
-        public DefinicionStruct(string id, bool notExistsValidation, LinkedList<Declaracion> declaraciones)
+        public DefinicionStruct(string id, bool notExistsValidation, LinkedList<IInstruccion> declaraciones)
         {
             this.id = id;
             this.notExistsValidation = notExistsValidation;

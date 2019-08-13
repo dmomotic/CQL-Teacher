@@ -172,27 +172,33 @@ namespace _OLC2_CQL_desktop.Inteprete
                 if(numero_hijos == 2)
                 {
                     string id = GetLexema(actual, 0);
-                    LinkedList<Declaracion> declaraciones = (LinkedList<Declaracion>)Recorrer(actual.LastChild);
+                    LinkedList<IInstruccion> declaraciones = (LinkedList<IInstruccion>)Recorrer(actual.LastChild);
                     return new DefinicionStruct(id,declaraciones);
                 }
             }
 
             if (SoyElNodo("LISTA_ATRIBUTOS", actual))
             {
-                LinkedList<Declaracion> declaraciones = new LinkedList<Declaracion>();
+                LinkedList<IInstruccion> declaraciones = new LinkedList<IInstruccion>();
                 foreach(ParseTreeNode atributo in actual.ChildNodes)
                 {
-                    declaraciones.AddLast((Declaracion)Recorrer(atributo));
+                    declaraciones.AddLast((IInstruccion)Recorrer(atributo));
                 }
                 return declaraciones;
             }
 
             if(SoyElNodo("ATRIBUTO", actual))
             {
-                //id int
                 LinkedList<string> ids = new LinkedList<string>();
                 string id = GetLexema(actual, 0);
                 ids.AddLast(id);
+                //id ID
+                if (actual.LastChild.Term.Name.Equals("id", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    string idStructGenerador = GetLexema(actual,1);
+                    return new DeclaracionStructComoAtributo(id, idStructGenerador);
+                }
+                //id int
                 Tipos tipo = GetTipo(actual.LastChild);
                 return new Declaracion(tipo,ids);
             }

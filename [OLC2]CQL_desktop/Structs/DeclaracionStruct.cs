@@ -36,9 +36,18 @@ namespace _OLC2_CQL_desktop.Structs
                 }
                 //Si no existe el identificador
                 Entorno atributos = new Entorno();
-                foreach(Declaracion declaracion in s.declaraciones)
+                foreach(IInstruccion declaracion in s.declaraciones)
                 {
-                    declaracion.Ejecutar(atributos);
+                    if(declaracion is DeclaracionStructComoAtributo)
+                    {
+                        DeclaracionStructComoAtributo dec = (DeclaracionStructComoAtributo)declaracion;
+                        dec.auxiliar = e;
+                        dec.Ejecutar(atributos);
+                    }
+                    else
+                    {
+                        declaracion.Ejecutar(atributos);
+                    }
                 }
                 e.InsertarObjeto(identificador, new Objeto(idStructGenerador, atributos));
             }

@@ -6,9 +6,9 @@ namespace _OLC2_CQL_desktop.Structs
 {
     class Struct : Simbolo
     {
-        public LinkedList<Declaracion> declaraciones;
+        public LinkedList<IInstruccion> declaraciones;
 
-        public Struct(string identificador, LinkedList<Declaracion> declaraciones) : base(identificador, Tipos.STRUCT)
+        public Struct(string identificador, LinkedList<IInstruccion> declaraciones) : base(identificador, Tipos.STRUCT)
         {
             this.declaraciones = declaraciones;
         }

@@ -140,6 +140,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 ;
 
             ATRIBUTO.Rule = id + TIPO_DATO //ya
+                | id + id
                 ;
 
             TIPO_DATO.Rule = r_int

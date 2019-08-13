@@ -3,13 +3,40 @@ Create type Estudiante(
 	nombre string
 );
 
-Estudiante @est;
+Create type Persona(
+	dpi int,
+	estu Estudiante
+);
+
+Create type Extraterrestre(
+	planeta string,
+	per Persona
+);
+
+Extraterrestre @ext;
+@ext.planeta = "marte";
+@ext.per.estu.nombre = "qe pez";
+
+print(@ext.planeta + " - " + @ext.per.estu.nombre);
+
+/*Persona @p1;
+@p1.estu.carnet = 5;
+@p1.dpi = 2518906;
+print(@p1.estu.carnet + " - " + @p1.dpi);
+
+Persona @p2;
+@p2.estu.nombre = "diego";
+@p2.dpi = 301578;
+print(@p2.estu.nombre + " - " + @p2.dpi);
+*/
+
+/*Estudiante @est;
 @est.carnet = 2015;
 print(@est.carnet);
 
 Estudiante @est2;
 @est2.carnet = 2020;
-print(@est2.carnet - @est.carnet);
+print(@est2.carnet - @est.carnet);*/
 
 /*int @a = 5*3+10/2-1;
 print(@a);
