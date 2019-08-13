@@ -23,5 +23,10 @@
         {
             return tipo.Equals(Tipos.STRUCT);
         }
+
+        public bool IsObject()
+        {
+            return tipo.Equals(Tipos.OBJETO);
+        }
     }
 }

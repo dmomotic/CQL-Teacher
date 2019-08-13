@@ -32,6 +32,23 @@ namespace _OLC2_CQL_desktop.Arbol
             this.Add(simbolo.identificador,simbolo);
         }
 
+        public void InsertarObjeto(string identificador, Objeto objeto)
+        {
+            this.Add(identificador,objeto);
+        }
+
+        public bool Existe(string identificador)
+        {
+            for(Entorno e = this; e!=null; e = e.padre)
+            {
+                if (e.Contains(identificador))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public Simbolo Obtener(string id)
         {
             for(Entorno e = this; e!=null; e = e.padre)
@@ -64,6 +81,17 @@ namespace _OLC2_CQL_desktop.Arbol
         public bool TieneAlStruct(string id)
         {
             return this.GetGlobal().Contains(id) && ((Simbolo)this.GetGlobal()[id]).IsStruct();
+        }
+
+        public Struct ObtenerStruct(string id)
+        {
+            Entorno global = this.GetGlobal();
+            if(global.Contains(id) && ((Simbolo)global[id]).IsStruct())
+            {
+                return (Struct)global[id];
+            }
+            Console.WriteLine("No se encontro al struct " + id + " en este entorno :( ");
+            return null;
         }
     }
 }

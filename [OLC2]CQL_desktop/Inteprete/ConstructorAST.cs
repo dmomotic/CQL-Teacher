@@ -82,11 +82,17 @@ namespace _OLC2_CQL_desktop.Inteprete
             {
                 int numero_hijos = actual.ChildNodes.Count;
 
-                //int LISTA_IDS_ARR
                 if(numero_hijos == 2)
                 {
-                    Tipos tipo = GetTipo(actual.ChildNodes[0]);
                     LinkedList<string> identificadores = GetIds(actual.ChildNodes[1]);
+                    //Estudiante LISTA_IDS_ARR
+                    if (actual.FirstChild.Term.Name.Equals("id"))
+                    {
+                        string id = GetLexema(actual,0);
+                        return new DeclaracionStruct(id,identificadores);
+                    }
+                    //int LISTA_IDS_ARR
+                    Tipos tipo = GetTipo(actual.ChildNodes[0]);
                     return new Declaracion(tipo, identificadores);
                 }
 
@@ -110,9 +116,34 @@ namespace _OLC2_CQL_desktop.Inteprete
                     IExpresion valor = (IExpresion)Recorrer(actual.ChildNodes[1]);
                     return new Asignacion(id, valor);
                 }
+
+                //id ACCESOS_OBJETO EXP
+                if(numero_hijos == 3)
+                {
+                    string id = GetLexema(actual,0);
+                    LinkedList<string> atributos = (LinkedList<string>)Recorrer(actual.ChildNodes[1]);
+                    IExpresion valor = (IExpresion)Recorrer(actual.ChildNodes[2]);
+                    return new AsignacionAtributo(id, atributos, valor);
+                }
             }
 
-            if(SoyElNodo("EXPRESION_ARITMETICA", actual))
+            if(SoyElNodo("ACCESOS_OBJETO", actual))
+            {
+                LinkedList<string> atributos = new LinkedList<string>();
+                foreach(ParseTreeNode hijo in actual.ChildNodes)
+                {
+                    string atributo = Recorrer(hijo).ToString();
+                    atributos.AddLast(atributo);
+                }
+                return atributos;
+            }
+
+            if(SoyElNodo("ACCESO", actual))
+            {
+                return GetLexema(actual.FirstChild);
+            }
+
+            if (SoyElNodo("EXPRESION_ARITMETICA", actual))
             {
                 int numero_hijos = actual.ChildNodes.Count;
 
@@ -124,6 +155,14 @@ namespace _OLC2_CQL_desktop.Inteprete
                     IExpresion opDer = (IExpresion)Recorrer(actual.LastChild);
                     return new Aritmetica(opIzq,operacion,opDer);
                 }
+            }
+
+            if(SoyElNodo("ACCESO_OBJETO", actual))
+            {
+                //id ACCESOS_OBJETO
+                string id = GetLexema(actual,0);
+                LinkedList<string> atributos = (LinkedList<string>)Recorrer(actual.LastChild);
+                return new AccesoObjeto(id, atributos);
             }
 
             if(SoyElNodo("CREACION_TIPO", actual))

@@ -132,14 +132,14 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             PRINT.Rule = r_print + parizq + EXPRESION + parder + ptocoma ; //ya
 
-            CREACION_TIPO.Rule = r_create + r_type + id + parizq + LISTA_ATRIBUTOS + parder + ptocoma
+            CREACION_TIPO.Rule = r_create + r_type + id + parizq + LISTA_ATRIBUTOS + parder + ptocoma //ya
                 | r_create + r_type + r_if + r_not + r_exists + id + parizq + LISTA_ATRIBUTOS + parder + ptocoma
                 ;
 
-            LISTA_ATRIBUTOS.Rule = MakePlusRule(LISTA_ATRIBUTOS, coma , ATRIBUTO)
+            LISTA_ATRIBUTOS.Rule = MakePlusRule(LISTA_ATRIBUTOS, coma , ATRIBUTO) //ya
                 ;
 
-            ATRIBUTO.Rule = id + TIPO_DATO
+            ATRIBUTO.Rule = id + TIPO_DATO //ya
                 ;
 
             TIPO_DATO.Rule = r_int
@@ -160,11 +160,13 @@ namespace _OLC2_CQL_desktop.Inteprete
             ASIGNACION.Rule = arroba + id + igual + r_new + id + ptocoma //@est = new Estudiante;
                 | arroba + id + igual + llavizq + LISTA_EXPRESIONES + llavder + ptocoma // @est = new {valores};
                 | arroba + id + igual + EXPRESION + ptocoma //@var = 5+"hola"; - primitivos ya
+                | arroba + id + ACCESOS_OBJETO + igual + EXPRESION + ptocoma //@obj.atr.atr = 5 +3; - ya
                ;
+
 
             EXPRESION.Rule = EXPRESION_ARITMETICA
                 | LITERAL //ya
-                | ACCESO_OBJETO
+                | ACCESO_OBJETO //ya
                 ;
 
             LITERAL.Rule = entero //ya
@@ -183,12 +185,12 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             LISTA_EXPRESIONES.Rule = MakePlusRule(LISTA_EXPRESIONES, coma, EXPRESION); //5,"hola",true
 
-            ACCESO_OBJETO.Rule = arroba + id + ACCESOS_OBJETO //@est.accesos
+            ACCESO_OBJETO.Rule = arroba + id + ACCESOS_OBJETO //@est.accesos - ya
                 ;
 
-            ACCESOS_OBJETO.Rule = MakePlusRule(ACCESOS_OBJETO, ACCESO); // .atributo.otroAtributo.otroAtributo
+            ACCESOS_OBJETO.Rule = MakePlusRule(ACCESOS_OBJETO, ACCESO); // .atributo.otroAtributo.otroAtributo - ya
 
-            ACCESO.Rule = punto + id; // .atributo
+            ACCESO.Rule = punto + id; // .atributo - ya
 
             ALTER_TYPE.Rule = r_alter + r_type + id + r_add + parizq + LISTA_ATRIBUTOS + parder + ptocoma //add campo
                 | r_alter + r_type + id + r_delete + parizq + LISTA_IDS + parder + ptocoma //delete campo
@@ -209,14 +211,14 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             /*** SIMBOLOS QUE NO ME SON DE UTILIDAD EN EL ARBOL ***/
             MarkPunctuation(
-                ptocoma, parizq, parder, arroba, igual, llavizq, llavder, coma,
+                ptocoma, parizq, parder, arroba, igual, llavizq, llavder, coma, punto,
                 r_create, r_type, r_if, r_not, r_new, r_alter, r_delete, r_add,
                 r_print
             );
 
             /*** NODOS QUE NO ME SON DE UTILIDAD EN EL ARBOL ***/
             MarkTransient(
-                INICIO, INSTRUCCION, TIPO_DATO, ACCESOS_OBJETO, ID_ARR, EXPRESION
+                INICIO, INSTRUCCION, TIPO_DATO, ID_ARR, EXPRESION
             );
 
 

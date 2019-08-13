@@ -3,6 +3,14 @@ Create type Estudiante(
 	nombre string
 );
 
+Estudiante @est;
+@est.carnet = 2015;
+print(@est.carnet);
+
+Estudiante @est2;
+@est2.carnet = 2020;
+print(@est2.carnet - @est.carnet);
+
 /*int @a = 5*3+10/2-1;
 print(@a);
 
