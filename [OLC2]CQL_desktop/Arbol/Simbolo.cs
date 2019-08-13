@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace _OLC2_CQL_desktop.Arbol
+﻿namespace _OLC2_CQL_desktop.Arbol
 {
     class Simbolo
     {
@@ -25,5 +19,9 @@ namespace _OLC2_CQL_desktop.Arbol
             this.tipo = tipo;
         }
 
+        public bool IsStruct()
+        {
+            return tipo.Equals(Tipos.STRUCT);
+        }
     }
 }

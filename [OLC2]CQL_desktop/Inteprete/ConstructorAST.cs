@@ -1,6 +1,7 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
 using _OLC2_CQL_desktop.Expresiones;
 using _OLC2_CQL_desktop.Instrucciones;
+using _OLC2_CQL_desktop.Structs;
 using Irony.Parsing;
 using System.Collections.Generic;
 using System.Globalization;
@@ -111,7 +112,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 }
             }
 
-            if (SoyElNodo("EXPRESION_ARITMETICA", actual))
+            if(SoyElNodo("EXPRESION_ARITMETICA", actual))
             {
                 int numero_hijos = actual.ChildNodes.Count;
 
@@ -123,6 +124,38 @@ namespace _OLC2_CQL_desktop.Inteprete
                     IExpresion opDer = (IExpresion)Recorrer(actual.LastChild);
                     return new Aritmetica(opIzq,operacion,opDer);
                 }
+            }
+
+            if(SoyElNodo("CREACION_TIPO", actual))
+            {
+                int numero_hijos = actual.ChildNodes.Count;
+                //id LISTA_ATRIBUTOS
+                if(numero_hijos == 2)
+                {
+                    string id = GetLexema(actual, 0);
+                    LinkedList<Declaracion> declaraciones = (LinkedList<Declaracion>)Recorrer(actual.LastChild);
+                    return new DefinicionStruct(id,declaraciones);
+                }
+            }
+
+            if (SoyElNodo("LISTA_ATRIBUTOS", actual))
+            {
+                LinkedList<Declaracion> declaraciones = new LinkedList<Declaracion>();
+                foreach(ParseTreeNode atributo in actual.ChildNodes)
+                {
+                    declaraciones.AddLast((Declaracion)Recorrer(atributo));
+                }
+                return declaraciones;
+            }
+
+            if(SoyElNodo("ATRIBUTO", actual))
+            {
+                //id int
+                LinkedList<string> ids = new LinkedList<string>();
+                string id = GetLexema(actual, 0);
+                ids.AddLast(id);
+                Tipos tipo = GetTipo(actual.LastChild);
+                return new Declaracion(tipo,ids);
             }
 
             return null;
@@ -222,7 +255,6 @@ namespace _OLC2_CQL_desktop.Inteprete
             }
             return Operaciones.SUMA;
         }
-
 
     }
 }

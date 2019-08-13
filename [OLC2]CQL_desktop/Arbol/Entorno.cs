@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _OLC2_CQL_desktop.Structs;
+using System;
 using System.Collections;
 
 namespace _OLC2_CQL_desktop.Arbol
@@ -43,6 +44,26 @@ namespace _OLC2_CQL_desktop.Arbol
             }
             Console.WriteLine("No se encontro la variable " + id + " en este entorno :(");
             return null;
+        }
+
+        public Entorno GetGlobal()
+        {
+            Entorno e = this;
+            while(e.padre != null)
+            {
+                e = e.padre;
+            }
+            return e;
+        }
+
+        public void InsertarStruct(Struct _struct)
+        {
+            this.GetGlobal().Add(_struct.identificador,_struct);
+        }
+
+        public bool TieneAlStruct(string id)
+        {
+            return this.GetGlobal().Contains(id) && ((Simbolo)this.GetGlobal()[id]).IsStruct();
         }
     }
 }
