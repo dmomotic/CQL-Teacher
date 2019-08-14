@@ -13,6 +13,10 @@ namespace _OLC2_CQL_desktop.Structs
             this.declaraciones = declaraciones;
         }
 
+        public int GetNumeroDeAtributos()
+        {
+            return declaraciones.Count;
+        }
 
     }
 }

@@ -168,6 +168,7 @@ namespace _OLC2_CQL_desktop.Inteprete
             EXPRESION.Rule = EXPRESION_ARITMETICA
                 | LITERAL //ya
                 | ACCESO_OBJETO //ya
+                | llavizq + LISTA_EXPRESIONES + llavder //aux para asignacion de objetos
                 ;
 
             LITERAL.Rule = entero //ya
@@ -184,7 +185,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | EXPRESION + div + EXPRESION //ya
                 ;
 
-            LISTA_EXPRESIONES.Rule = MakePlusRule(LISTA_EXPRESIONES, coma, EXPRESION); //5,"hola",true
+            LISTA_EXPRESIONES.Rule = MakePlusRule(LISTA_EXPRESIONES, coma, EXPRESION)  //5,"hola",true
+                ;
 
             ACCESO_OBJETO.Rule = arroba + id + ACCESOS_OBJETO //@est.accesos - ya
                 ;

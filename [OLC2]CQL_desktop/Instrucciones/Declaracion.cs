@@ -8,7 +8,7 @@ namespace _OLC2_CQL_desktop.Instrucciones
     {
 
         readonly Tipos tipo;
-        readonly LinkedList<string> identificadores;
+        public readonly LinkedList<string> identificadores;
         readonly IExpresion asignacion;
 
         public Declaracion(Tipos tipo, LinkedList<string> identificadores)

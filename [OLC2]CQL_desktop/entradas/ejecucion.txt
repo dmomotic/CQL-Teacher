@@ -3,6 +3,23 @@ Create type Estudiante(
 	nombre string
 );
 
+Estudiante @est = {25,"diego"};
+
+print("Mi nombre es: " +@est.nombre);
+print("Mi carnet es: " + @est.carnet);
+
+Estudiante @est1;
+@est1.nombre = @est.nombre;
+print("Mi nombre tambien es: " + @est1.nombre);
+
+int @carnet = @est.carnet;
+print(@carnet);
+
+/*Create type Estudiante(
+	carnet int,
+	nombre string
+);
+
 Create type Persona(
 	dpi int,
 	estu Estudiante
@@ -18,6 +35,7 @@ Extraterrestre @ext;
 @ext.per.estu.nombre = "qe pez";
 
 print(@ext.planeta + " - " + @ext.per.estu.nombre);
+*/
 
 /*Persona @p1;
 @p1.estu.carnet = 5;

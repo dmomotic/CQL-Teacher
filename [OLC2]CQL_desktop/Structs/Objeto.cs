@@ -25,7 +25,13 @@ namespace _OLC2_CQL_desktop.Structs
 
         public void SetAtributo(string atributo, object valor)
         {
-            atributos[atributo] = valor;
+            Simbolo s = (Simbolo)atributos[atributo];
+            if (s!=null) s.valor = valor;
+        }
+
+        public int GetNumeroDeAtributos()
+        {
+            return atributos.Count;
         }
     }
 }

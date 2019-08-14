@@ -96,11 +96,21 @@ namespace _OLC2_CQL_desktop.Inteprete
                     return new Declaracion(tipo, identificadores);
                 }
 
-                //int LISTA_IDS_ARR EXP
-                if(numero_hijos == 3)
+
+                if (numero_hijos == 3)
                 {
-                    Tipos tipo = GetTipo(actual.ChildNodes[0]);
                     LinkedList<string> identificadores = GetIds(actual.ChildNodes[1]);
+                    
+                    //Estudiante LISTA_IDS_ARR LISTA_EXPRESIONES
+                    if (actual.LastChild.Term.Name.Equals("LISTA_EXPRESIONES", System.StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        string idStructGenerador = GetLexema(actual, 0);
+                        LinkedList<IExpresion> asignaciones = (LinkedList<IExpresion>)Recorrer(actual.ChildNodes[2]);
+                        return new DeclaracionStruct(idStructGenerador, identificadores, asignaciones);
+                    }
+
+                    //int LISTA_IDS_ARR EXP
+                    Tipos tipo = GetTipo(actual.ChildNodes[0]);
                     IExpresion asignacion = (IExpresion)Recorrer(actual.ChildNodes[2]);
                     return new Declaracion(tipo, identificadores, asignacion);
                 }
@@ -201,6 +211,17 @@ namespace _OLC2_CQL_desktop.Inteprete
                 //id int
                 Tipos tipo = GetTipo(actual.LastChild);
                 return new Declaracion(tipo,ids);
+            }
+
+            if (SoyElNodo("LISTA_EXPRESIONES", actual))
+            {
+                LinkedList<IExpresion> expresiones = new LinkedList<IExpresion>();
+                foreach(ParseTreeNode hijo in actual.ChildNodes)
+                {
+                    IExpresion exp = (IExpresion)Recorrer(hijo);
+                    expresiones.AddLast(exp);
+                }
+                return expresiones;
             }
 
             return null;
