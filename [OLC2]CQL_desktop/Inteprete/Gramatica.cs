@@ -151,15 +151,15 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | r_time
                 ;
 
-            DECLARACION.Rule = id + LISTA_IDS_ARR + ptocoma //Estudiante @est;
-                | id + LISTA_IDS_ARR + igual + r_new + id + ptocoma // Estudiante @est = new Estudiante;
-                | id + LISTA_IDS_ARR + igual + llavizq + LISTA_EXPRESIONES + llavder + ptocoma //Estudiante @est = {valores};
+            DECLARACION.Rule = id + LISTA_IDS_ARR + ptocoma //Estudiante @est; - ya
+                | id + LISTA_IDS_ARR + igual + r_new + id + ptocoma // Estudiante @est = new Estudiante; - ya
+                | id + LISTA_IDS_ARR + igual + llavizq + LISTA_EXPRESIONES + llavder + ptocoma //Estudiante @est = {valores}; //primitivos ya
                 | TIPO_DATO + LISTA_IDS_ARR + igual + EXPRESION + ptocoma //int @carnet = cualquiercosa; - primitivos ya
                 | TIPO_DATO + LISTA_IDS_ARR + ptocoma //int @carnet; - ya 
                 ;
 
-            ASIGNACION.Rule = arroba + id + igual + r_new + id + ptocoma //@est = new Estudiante;
-                | arroba + id + igual + llavizq + LISTA_EXPRESIONES + llavder + ptocoma // @est = new {valores};
+            ASIGNACION.Rule = arroba + id + igual + r_new + id + ptocoma //@est = new Estudiante; - ya
+                | arroba + id + igual + llavizq + LISTA_EXPRESIONES + llavder + ptocoma // @est = new {valores}; - primitivos ya
                 | arroba + id + igual + EXPRESION + ptocoma //@var = 5+"hola"; - primitivos ya
                 | arroba + id + ACCESOS_OBJETO + igual + EXPRESION + ptocoma //@obj.atr.atr = 5 +3; - ya
                ;

@@ -100,6 +100,13 @@ namespace _OLC2_CQL_desktop.Inteprete
                 if (numero_hijos == 3)
                 {
                     LinkedList<string> identificadores = GetIds(actual.ChildNodes[1]);
+
+                    //Estudiante LISTA_IDS_ARR Estudiante    //Est @e = new Est
+                    if(SoyElNodo("id",actual.FirstChild) && SoyElNodo("id", actual.LastChild))
+                    {
+                        string idStructGenerador = GetLexema(actual.FirstChild);
+                        return new DeclaracionStruct(idStructGenerador,identificadores);
+                    }
                     
                     //Estudiante LISTA_IDS_ARR LISTA_EXPRESIONES
                     if (actual.LastChild.Term.Name.Equals("LISTA_EXPRESIONES", System.StringComparison.InvariantCultureIgnoreCase))
@@ -119,10 +126,25 @@ namespace _OLC2_CQL_desktop.Inteprete
             if(SoyElNodo("ASIGNACION", actual)){
                 int numero_hijos = actual.ChildNodes.Count;
 
-                //id exp
+                
                 if (numero_hijos == 2)
                 {
-                    string id = GetLexema(actual,0);
+                    string id = GetLexema(actual, 0);
+                    //id LISTA_EXPRESIONES
+                    if(SoyElNodo("LISTA_EXPRESIONES", actual.LastChild))
+                    {
+                        LinkedList<IExpresion> asignaciones = (LinkedList<IExpresion>)Recorrer(actual.LastChild);
+                        return new AsignacionStruct(id,asignaciones);
+                    }
+
+                    //id ID
+                    if (SoyElNodo("id", actual.LastChild))
+                    {
+                        string idStructGenerador = GetLexema(actual,1);
+                        return new AsignacionStruct(id, idStructGenerador);
+                    }
+
+                    //id exp
                     IExpresion valor = (IExpresion)Recorrer(actual.ChildNodes[1]);
                     return new Asignacion(id, valor);
                 }

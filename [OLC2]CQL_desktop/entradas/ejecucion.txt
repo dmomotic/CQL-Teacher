@@ -2,6 +2,30 @@ Create type Estudiante(
 	carnet int,
 	nombre string
 );
+Estudiante @est2;
+@est2 = {2013,"Carlos"};
+print("soy " + @est2.nombre + " mi carnet es: " + @est2.carnet);
+
+/*
+Create type Estudiante(
+	carnet int,
+	nombre string
+);
+Estudiante @est2;
+@est2.nombre = "que pez";
+@est2 = new Estudiante;
+@est2.carnet = 201318633;
+@est2.nombre = "Diego";
+
+print("soy " + @est2.nombre + " mi carnet es: " + @est2.carnet);
+*/
+
+
+/*
+Create type Estudiante(
+	carnet int,
+	nombre string
+);
 
 Estudiante @est = {25,"diego"};
 
@@ -14,6 +38,7 @@ print("Mi nombre tambien es: " + @est1.nombre);
 
 int @carnet = @est.carnet;
 print(@carnet);
+*/
 
 /*Create type Estudiante(
 	carnet int,

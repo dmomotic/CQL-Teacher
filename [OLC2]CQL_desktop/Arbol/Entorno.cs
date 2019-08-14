@@ -37,6 +37,18 @@ namespace _OLC2_CQL_desktop.Arbol
             this.Add(identificador,objeto);
         }
 
+        public void ActualizarObjeto(string identificador, Objeto objeto)
+        {
+            for(Entorno e = this; e!=null; e = e.padre)
+            {
+                if (e.ContainsKey(identificador))
+                {
+                    e[identificador] = objeto;
+                    return;
+                }
+            }
+        }
+
         public bool Existe(string identificador)
         {
             for(Entorno e = this; e!=null; e = e.padre)
