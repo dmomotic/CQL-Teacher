@@ -1,3 +1,49 @@
+int @i = 20;
+double @d = 30.5;
+string @s = "qe pez";
+boolean @b = true;
+
+@i=30.5;
+
+
+/*
+Create type Estudiante(
+	carnet int,
+	nombre string
+);
+
+Delete type Estudiante;
+
+Estudiante @est;
+*/
+
+/*
+Create type Estudiante(
+	carnet int,
+	nombre string
+);
+
+Estudiante @est1 = {2013,"Diego"};
+
+Alter type Estudiante Add(
+	peso double,
+	direccion string
+);
+
+Estudiante @est2 = {2015,"Carlos",75.75,"Guatemala"};
+print(@est1.carnet + " y " + @est2.direccion);
+
+Alter type Estudiante Delete(
+	peso,
+	nombre
+);
+
+Estudiante @est3;
+@est3.nombre = "karen";
+print(@est3.nombre);
+*/
+
+/*
 Create type Estudiante(
 	carnet int,
 	nombre string
@@ -5,6 +51,7 @@ Create type Estudiante(
 Estudiante @est2;
 @est2 = {2013,"Carlos"};
 print("soy " + @est2.nombre + " mi carnet es: " + @est2.carnet);
+*/
 
 /*
 Create type Estudiante(

@@ -18,7 +18,7 @@ namespace _OLC2_CQL_desktop.Inteprete
         private object Recorrer(ParseTreeNode actual)
         {
             //Tiene varios hijos
-            if(SoyElNodo("INSTRUCCIONES", actual))
+            if (SoyElNodo("INSTRUCCIONES", actual))
             {
                 LinkedList<INodoAST> instrucciones = new LinkedList<INodoAST>();
                 foreach(ParseTreeNode hijo in actual.ChildNodes)
@@ -29,13 +29,13 @@ namespace _OLC2_CQL_desktop.Inteprete
             }
 
             //Solo tiene un hijo
-            if(SoyElNodo("PRINT", actual))
+            if (SoyElNodo("PRINT", actual))
             {
                 return new Print((IExpresion)Recorrer(actual.ChildNodes[0]));
             }
 
             //Solo tiene un hijo
-            if(SoyElNodo("LITERAL", actual))
+            if (SoyElNodo("LITERAL", actual))
             {
                 if (SoyElNodo("entero",actual.ChildNodes[0]))
                 {
@@ -78,7 +78,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 return null;
             }
 
-            if(SoyElNodo("DECLARACION", actual))
+            if (SoyElNodo("DECLARACION", actual))
             {
                 int numero_hijos = actual.ChildNodes.Count;
 
@@ -123,7 +123,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 }
             }
 
-            if(SoyElNodo("ASIGNACION", actual)){
+            if (SoyElNodo("ASIGNACION", actual)){
                 int numero_hijos = actual.ChildNodes.Count;
 
                 
@@ -159,7 +159,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 }
             }
 
-            if(SoyElNodo("ACCESOS_OBJETO", actual))
+            if (SoyElNodo("ACCESOS_OBJETO", actual))
             {
                 LinkedList<string> atributos = new LinkedList<string>();
                 foreach(ParseTreeNode hijo in actual.ChildNodes)
@@ -170,7 +170,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 return atributos;
             }
 
-            if(SoyElNodo("ACCESO", actual))
+            if (SoyElNodo("ACCESO", actual))
             {
                 return GetLexema(actual.FirstChild);
             }
@@ -189,7 +189,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 }
             }
 
-            if(SoyElNodo("ACCESO_OBJETO", actual))
+            if (SoyElNodo("ACCESO_OBJETO", actual))
             {
                 //id ACCESOS_OBJETO
                 string id = GetLexema(actual,0);
@@ -197,7 +197,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 return new AccesoObjeto(id, atributos);
             }
 
-            if(SoyElNodo("CREACION_TIPO", actual))
+            if (SoyElNodo("CREACION_TIPO", actual))
             {
                 int numero_hijos = actual.ChildNodes.Count;
                 //id LISTA_ATRIBUTOS
@@ -219,7 +219,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 return declaraciones;
             }
 
-            if(SoyElNodo("ATRIBUTO", actual))
+            if (SoyElNodo("ATRIBUTO", actual))
             {
                 LinkedList<string> ids = new LinkedList<string>();
                 string id = GetLexema(actual, 0);
@@ -244,6 +244,41 @@ namespace _OLC2_CQL_desktop.Inteprete
                     expresiones.AddLast(exp);
                 }
                 return expresiones;
+            }
+
+            if (SoyElNodo("ALTER_TYPE", actual))
+            {
+                //id LISTA_ATRIBUTOS
+                string idStruct = GetLexema(actual,0);
+                if(SoyElNodo("LISTA_ATRIBUTOS", actual.LastChild))
+                {
+                    LinkedList<IInstruccion> declaraciones = (LinkedList<IInstruccion>)Recorrer(actual.LastChild);
+                    return new AlterType(idStruct, declaraciones);
+                }
+
+                //id LISTA_IDS
+                if(SoyElNodo("LISTA_IDS", actual.LastChild))
+                {
+                    LinkedList<string> atributos = (LinkedList<string>)Recorrer(actual.LastChild);
+                    return new AlterType(idStruct, atributos);
+                }
+            }
+
+            if (SoyElNodo("LISTA_IDS", actual))
+            {
+                LinkedList<string> ids = new LinkedList<string>();
+                foreach(ParseTreeNode hijo in actual.ChildNodes)
+                {
+                    string id = GetLexema(hijo);
+                    ids.AddLast(id);
+                }
+                return ids;
+            }
+
+            if (SoyElNodo("DELETE_TYPE", actual))
+            {
+                string idStruct = GetLexema(actual, 0);
+                return new DeleteType(idStruct);
             }
 
             return null;

@@ -125,8 +125,8 @@ namespace _OLC2_CQL_desktop.Inteprete
             INSTRUCCION.Rule = CREACION_TIPO
                 | DECLARACION
                 | ASIGNACION
-                | ALTER_TYPE
-                | DELETE_TYPE
+                | ALTER_TYPE //ya
+                | DELETE_TYPE //ya
                 | PRINT //ya
                 ;
 
@@ -159,7 +159,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 ;
 
             ASIGNACION.Rule = arroba + id + igual + r_new + id + ptocoma //@est = new Estudiante; - ya
-                | arroba + id + igual + llavizq + LISTA_EXPRESIONES + llavder + ptocoma // @est = new {valores}; - primitivos ya
+                | arroba + id + igual + llavizq + LISTA_EXPRESIONES + llavder + ptocoma // @est = new {valores}; - primitivos ya8/
                 | arroba + id + igual + EXPRESION + ptocoma //@var = 5+"hola"; - primitivos ya
                 | arroba + id + ACCESOS_OBJETO + igual + EXPRESION + ptocoma //@obj.atr.atr = 5 +3; - ya
                ;
@@ -195,11 +195,11 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             ACCESO.Rule = punto + id; // .atributo - ya
 
-            ALTER_TYPE.Rule = r_alter + r_type + id + r_add + parizq + LISTA_ATRIBUTOS + parder + ptocoma //add campo
-                | r_alter + r_type + id + r_delete + parizq + LISTA_IDS + parder + ptocoma //delete campo
+            ALTER_TYPE.Rule = r_alter + r_type + id + r_add + parizq + LISTA_ATRIBUTOS + parder + ptocoma //add campo - ya
+                | r_alter + r_type + id + r_delete + parizq + LISTA_IDS + parder + ptocoma //delete campo - ya
                 ;
 
-            DELETE_TYPE.Rule = r_delete + r_type + id + ptocoma; //delete type Estudiante ;
+            DELETE_TYPE.Rule = r_delete + r_type + id + ptocoma; //delete type Estudiante ; - ya
 
             LISTA_IDS.Rule = MakePlusRule(LISTA_IDS, coma, id); // id, otro_id, otro_id
 

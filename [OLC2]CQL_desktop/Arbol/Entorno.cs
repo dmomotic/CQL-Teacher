@@ -105,5 +105,11 @@ namespace _OLC2_CQL_desktop.Arbol
             Console.WriteLine("No se encontro al struct " + id + " en este entorno :( ");
             return null;
         }
+
+        public void DeleteStruct(string idStruct)
+        {
+            Entorno global = this.GetGlobal();
+            global.Remove(idStruct);
+        }
     }
 }

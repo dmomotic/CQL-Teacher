@@ -74,11 +74,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structs\AccesoObjeto.cs" />
+    <Compile Include="Structs\AlterType.cs" />
     <Compile Include="Structs\AsignacionAtributo.cs" />
     <Compile Include="Structs\AsignacionStruct.cs" />
     <Compile Include="Structs\DeclaracionStruct.cs" />
     <Compile Include="Structs\DeclaracionStructComoAtributo.cs" />
     <Compile Include="Structs\DefinicionStruct.cs" />
+    <Compile Include="Structs\DeleteType.cs" />
     <Compile Include="Structs\Objeto.cs" />
     <Compile Include="Structs\Struct.cs" />
     <EmbeddedResource Include="Form1.resx">
