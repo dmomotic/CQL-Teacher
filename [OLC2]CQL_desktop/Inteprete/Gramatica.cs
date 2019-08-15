@@ -28,7 +28,10 @@ namespace _OLC2_CQL_desktop.Inteprete
                 r_alter = ToTerm("alter"),
                 r_add = ToTerm("add"),
                 r_delete = ToTerm("delete"),
-                r_print = ToTerm("print")
+                r_print = ToTerm("print"),
+                r_table = ToTerm("table"),
+                r_primary = ToTerm("primary"),
+                r_key = ToTerm("key")
             ;
 
             //Le indicamos al parser las palabras reservadas, para evitar conflictos al reconocer ids
@@ -51,7 +54,10 @@ namespace _OLC2_CQL_desktop.Inteprete
                 "alter",
                 "add",
                 "delete",
-                "print"
+                "print",
+                "table",
+                "primary",
+                "key"
             );
 
             /*** SIMBOLOS DEL LENGUAJE ***/
@@ -110,8 +116,12 @@ namespace _OLC2_CQL_desktop.Inteprete
                 ID_ARR = new NonTerminal("ID_ARR"),
                 PRINT = new NonTerminal("PRINT"),
                 EXPRESION_ARITMETICA = new NonTerminal("EXPRESION_ARITMETICA"),
-                LITERAL = new NonTerminal("LITERAL")
-            
+                LITERAL = new NonTerminal("LITERAL"),
+                INSTRUCCIONES_DDL = new NonTerminal("INSTRUCCIONES_DDL"),
+                INSTRUCCION_DDL = new NonTerminal("INSTRUCCION_DDL"),
+                CREATE_TABLE = new NonTerminal("CREATE_TABLE"),
+                COLUMNAS_TABLA = new NonTerminal("COLUMNAS_TABLA"),
+                COLUMNA_TABLA = new NonTerminal("COLUMNA_TABLA")
             ;
 
             #endregion
@@ -128,6 +138,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | ALTER_TYPE //ya
                 | DELETE_TYPE //ya
                 | PRINT //ya
+                | INSTRUCCIONES_DDL
                 ;
 
             PRINT.Rule = r_print + parizq + EXPRESION + parder + ptocoma ; //ya
@@ -207,6 +218,21 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             ID_ARR.Rule = arroba + id; // @id
 
+            INSTRUCCIONES_DDL.Rule = MakePlusRule(INSTRUCCIONES_DDL, INSTRUCCION_DDL);
+
+            INSTRUCCION_DDL.Rule = CREATE_TABLE
+                ;
+
+            CREATE_TABLE.Rule = r_create + r_table + id + parizq + COLUMNAS_TABLA + parder + ptocoma
+                | r_create + r_table + r_if + r_not + r_exists + id + parizq + COLUMNAS_TABLA + parder + ptocoma
+                ;
+
+            COLUMNAS_TABLA.Rule = MakePlusRule(COLUMNAS_TABLA, coma, COLUMNA_TABLA);
+
+            COLUMNA_TABLA.Rule = id + TIPO_DATO + r_primary + r_key
+                | id + TIPO_DATO
+                | r_primary + r_key + parizq + LISTA_IDS + parder
+                ;
 
             /*** PRECEDENCIAS ***/
             RegisterOperators(5, Associativity.Left, mas, menos);

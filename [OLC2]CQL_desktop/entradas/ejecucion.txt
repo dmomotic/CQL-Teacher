@@ -1,10 +1,25 @@
-int @i = 20;
+CREATE TABLE EspeciesDeMono(
+	especie string PRIMARY KEY,
+	nombre_comun string,
+	poblacion int,
+	tamanio_promedio int
+);
+
+
+/*int @i = 20;
 double @d = 30.5;
 string @s = "qe pez";
 boolean @b = true;
 
-@i=30.5;
+int @f=30.5;
+print(@f);
+@d = 25;
+print(@d);
 
+double @c = 2.25;
+int @g = @c;
+print(@g);
+*/
 
 /*
 Create type Estudiante(

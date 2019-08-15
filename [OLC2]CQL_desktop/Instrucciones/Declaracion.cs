@@ -1,4 +1,5 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
+using _OLC2_CQL_desktop.Expresiones;
 using System;
 using System.Collections.Generic;
 
@@ -46,14 +47,34 @@ namespace _OLC2_CQL_desktop.Instrucciones
             }
 
             //Si se tiene un simbolo valido
-            if (!asignacion.GetTipo(e).Equals(s.tipo))
+            Tipos tipoaAsignar = asignacion.GetTipo(e);
+            object valor = asignacion.GetValor(e);
+
+            if (!tipoaAsignar.Equals(s.tipo))
             {
-               Console.WriteLine("No se puede asigar un tipo difrente a " + s.tipo + " al identificador: " + id);
-                return; 
+                //Intento realizar un casteo 
+                Casteo cast = new Casteo(s.tipo,tipoaAsignar,valor);
+                Tipos tipoNuevo = cast.GetTipo(e);
+                if (!tipoNuevo.Equals(Tipos.NULL))
+                {
+                    object nuevoValor = cast.GetValor(e);
+                    if (nuevoValor == null)
+                    {
+                        Console.WriteLine("Ocurrio un error al ejecutar el cast");
+                        return;
+                    }
+                    //Si se obtuvo un valor valido del cast
+                    s.valor = nuevoValor;
+                }
+                //Si no se puede realizar el casteo
+                else
+                {
+                    Console.WriteLine("No se puede asigar un tipo difrente a " + s.tipo + " al identificador: " + id);
+                }
+                return;
             }
 
             //Si el tipo de asignacion y del simbolo son iguales
-            object valor = asignacion.GetValor(e);
             if (valor == null)
             {
                 Console.WriteLine("El valor calculado en la asignacion del id " + id + " es null");
