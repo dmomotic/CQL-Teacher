@@ -56,8 +56,12 @@
     <Compile Include="Arbol\NodoAST.cs" />
     <Compile Include="Arbol\Simbolo.cs" />
     <Compile Include="Arbol\Tipos.cs" />
+    <Compile Include="DDL\Columna.cs" />
     <Compile Include="DDL\CreateTable.cs" />
     <Compile Include="DDL\Tabla.cs" />
+    <Compile Include="DML\Celda.cs" />
+    <Compile Include="DML\Insert.cs" />
+    <Compile Include="DML\Select.cs" />
     <Compile Include="Expresiones\Aritmetica.cs" />
     <Compile Include="Expresiones\Casteo.cs" />
     <Compile Include="Expresiones\Identificador.cs" />

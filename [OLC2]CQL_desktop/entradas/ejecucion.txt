@@ -1,9 +1,28 @@
+CREATE TABLE Estudiante(
+	id int PRIMARY KEY,
+	nombre string,
+	pais string
+);
+
+INSERT INTO Estudiante VALUES (1,"Juan Valdez","Colombia");
+INSERT INTO Estudiante VALUES (2,"Karla","Guatemala");
+INSERT INTO Estudiante VALUES (3,"Diego","Colombia");
+INSERT INTO Estudiante VALUES (4,"Monica","Mexico");
+INSERT INTO Estudiante VALUES (5,"Jessica","Colombia");
+INSERT INTO Estudiante VALUES (6,"Luis","Peru");
+
+Select * from Estudiante;
+
+//INSERT INTO Estudiante(id,nombre) VALUES (2,"Diego"); 
+
+/*
 CREATE TABLE EspeciesDeMono(
 	especie string PRIMARY KEY,
 	nombre_comun string,
 	poblacion int,
 	tamanio_promedio int
 );
+*/
 
 
 /*int @i = 20;

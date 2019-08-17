@@ -31,7 +31,13 @@ namespace _OLC2_CQL_desktop.Inteprete
                 r_print = ToTerm("print"),
                 r_table = ToTerm("table"),
                 r_primary = ToTerm("primary"),
-                r_key = ToTerm("key")
+                r_key = ToTerm("key"),
+                r_insert = ToTerm("insert"),
+                r_into = ToTerm("into"),
+                r_values = ToTerm("values"),
+                r_select = ToTerm("select"),
+                r_from = ToTerm("from"),
+                r_where = ToTerm("where")
             ;
 
             //Le indicamos al parser las palabras reservadas, para evitar conflictos al reconocer ids
@@ -57,7 +63,13 @@ namespace _OLC2_CQL_desktop.Inteprete
                 "print",
                 "table",
                 "primary",
-                "key"
+                "key",
+                "insert",
+                "into",
+                "values",
+                "select",
+                "from",
+                "where"
             );
 
             /*** SIMBOLOS DEL LENGUAJE ***/
@@ -121,7 +133,11 @@ namespace _OLC2_CQL_desktop.Inteprete
                 INSTRUCCION_DDL = new NonTerminal("INSTRUCCION_DDL"),
                 CREATE_TABLE = new NonTerminal("CREATE_TABLE"),
                 COLUMNAS_TABLA = new NonTerminal("COLUMNAS_TABLA"),
-                COLUMNA_TABLA = new NonTerminal("COLUMNA_TABLA")
+                COLUMNA_TABLA = new NonTerminal("COLUMNA_TABLA"),
+                INSTRUCCIONES_DML = new NonTerminal("INSTRUCCIONES_DML"),
+                INSTRUCCION_DML = new NonTerminal("INSTRUCCION_DML"),
+                INSERT = new NonTerminal("INSERT"),
+                SELECT = new NonTerminal("SELECT")
             ;
 
             #endregion
@@ -139,6 +155,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | DELETE_TYPE //ya
                 | PRINT //ya
                 | INSTRUCCIONES_DDL
+                | INSTRUCCION_DML
                 ;
 
             PRINT.Rule = r_print + parizq + EXPRESION + parder + ptocoma ; //ya
@@ -223,16 +240,28 @@ namespace _OLC2_CQL_desktop.Inteprete
             INSTRUCCION_DDL.Rule = CREATE_TABLE
                 ;
 
-            CREATE_TABLE.Rule = r_create + r_table + id + parizq + COLUMNAS_TABLA + parder + ptocoma
+            CREATE_TABLE.Rule = r_create + r_table + id + parizq + COLUMNAS_TABLA + parder + ptocoma // ya
                 | r_create + r_table + r_if + r_not + r_exists + id + parizq + COLUMNAS_TABLA + parder + ptocoma
                 ;
 
-            COLUMNAS_TABLA.Rule = MakePlusRule(COLUMNAS_TABLA, coma, COLUMNA_TABLA);
+            COLUMNAS_TABLA.Rule = MakePlusRule(COLUMNAS_TABLA, coma, COLUMNA_TABLA); //ya
 
             COLUMNA_TABLA.Rule = id + TIPO_DATO + r_primary + r_key
-                | id + TIPO_DATO
+                | id + TIPO_DATO //ya
                 | r_primary + r_key + parizq + LISTA_IDS + parder
                 ;
+
+            INSTRUCCIONES_DML.Rule = MakePlusRule(INSTRUCCIONES_DML, INSTRUCCION_DML);
+
+            INSTRUCCION_DML.Rule = INSERT //ya
+                | SELECT
+                ;
+
+            INSERT.Rule = r_insert + r_into + id + r_values + parizq + LISTA_EXPRESIONES + parder + ptocoma //ya
+                | r_insert + r_into + id + parizq + LISTA_IDS + parder + r_values + parizq + LISTA_EXPRESIONES + parder + ptocoma //ya
+                ;
+
+            SELECT.Rule = r_select + por + r_from + id + ptocoma;
 
             /*** PRECEDENCIAS ***/
             RegisterOperators(5, Associativity.Left, mas, menos);
@@ -242,12 +271,13 @@ namespace _OLC2_CQL_desktop.Inteprete
             MarkPunctuation(
                 ptocoma, parizq, parder, arroba, igual, llavizq, llavder, coma, punto,
                 r_create, r_type, r_if, r_not, r_new, r_alter, r_delete, r_add,
-                r_print
+                r_print, r_table, r_key, r_insert, r_into, r_values, r_select, r_from, r_where
             );
 
             /*** NODOS QUE NO ME SON DE UTILIDAD EN EL ARBOL ***/
             MarkTransient(
-                INICIO, INSTRUCCION, TIPO_DATO, ID_ARR, EXPRESION
+                INICIO, INSTRUCCION, TIPO_DATO, ID_ARR, EXPRESION, INSTRUCCIONES_DDL, INSTRUCCION_DDL,
+                INSTRUCCIONES_DML, INSTRUCCION_DML
             );
 
 

@@ -1,4 +1,5 @@
-﻿using _OLC2_CQL_desktop.Structs;
+﻿using _OLC2_CQL_desktop.DDL;
+using _OLC2_CQL_desktop.Structs;
 using System;
 using System.Collections;
 
@@ -30,6 +31,11 @@ namespace _OLC2_CQL_desktop.Arbol
                 }
             }
             this.Add(simbolo.identificador,simbolo);
+        }
+
+        public void InsertarTabla(Tabla tabla)
+        {
+            this.Add(tabla.identificador, tabla);
         }
 
         public void InsertarObjeto(string identificador, Objeto objeto)
@@ -72,6 +78,20 @@ namespace _OLC2_CQL_desktop.Arbol
                 }
             }
             Console.WriteLine("No se encontro la variable " + id + " en este entorno :(");
+            return null;
+        }
+
+        public Tabla ObtenerTabla(string id)
+        {
+            for (Entorno e = this; e != null; e = e.padre)
+            {
+                Simbolo encontrado = (Simbolo)e[id];
+                if (encontrado != null && encontrado.IsTabla())
+                {
+                    return (Tabla)encontrado;
+                }
+            }
+            //Console.WriteLine("No se encontro la tabla " + id + " :(");
             return null;
         }
 

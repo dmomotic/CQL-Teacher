@@ -1,4 +1,6 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
+using _OLC2_CQL_desktop.DDL;
+using _OLC2_CQL_desktop.DML;
 using _OLC2_CQL_desktop.Expresiones;
 using _OLC2_CQL_desktop.Instrucciones;
 using _OLC2_CQL_desktop.Structs;
@@ -279,6 +281,78 @@ namespace _OLC2_CQL_desktop.Inteprete
             {
                 string idStruct = GetLexema(actual, 0);
                 return new DeleteType(idStruct);
+            }
+
+            if (SoyElNodo("CREATE_TABLE", actual))
+            {
+                int numero_hijos = actual.ChildNodes.Count;
+                // nombreTabla COLUMNAS_TABLA
+                if (numero_hijos == 2)
+                {
+                    string nombre = GetLexema(actual,0);
+                    LinkedList<Columna> columnas = (LinkedList<Columna>)Recorrer(actual.LastChild);
+                    return new CreateTable(nombre, columnas);
+                } 
+            }
+
+            if (SoyElNodo("COLUMNAS_TABLA", actual))
+            {
+                LinkedList<Columna> columnas = new LinkedList<Columna>();
+                foreach(ParseTreeNode hijo in actual.ChildNodes)
+                {
+                    Columna columna = (Columna)Recorrer(hijo);
+                    columnas.AddLast(columna);
+                }
+                return columnas;
+            }
+
+            if (SoyElNodo("COLUMNA_TABLA", actual))
+            {
+                int numero_hijos = actual.ChildNodes.Count;
+
+                string nombre = GetLexema(actual, 0);
+                Tipos tipo = GetTipo(actual.ChildNodes[1]);
+
+                //id TIPO_DATO primary
+                if (numero_hijos == 3)
+                {    
+                    return new Columna(nombre, tipo, true);
+                }
+
+                //id TIPO_DATO
+                if (numero_hijos == 2)
+                {
+                    return new Columna(nombre, tipo);
+                }
+            }
+
+            if (SoyElNodo("INSERT", actual))
+            {
+                int numero_hijos = actual.ChildNodes.Count;
+                string nombreTabla = GetLexema(actual, 0);
+                LinkedList<IExpresion> expresiones = (LinkedList<IExpresion>)Recorrer(actual.LastChild);
+                //nombreTabla LISTA_EXPRESIONES
+                if (numero_hijos == 2)
+                {
+                    return new Insert(nombreTabla, expresiones);
+                }
+                //nombreTabla LISTA_IDS LISTA_EXPRESIONES
+                if (numero_hijos == 3)
+                {
+                    LinkedList<string> ids = (LinkedList<string>)Recorrer(actual.ChildNodes[1]);
+                    return new Insert(nombreTabla, ids, expresiones);
+                }
+            }
+
+            if (SoyElNodo("SELECT", actual))
+            {
+                int numero_hijos = actual.ChildNodes.Count;
+                // * NombreTabla
+                if (numero_hijos == 2)
+                {
+                    string nombreTabla = GetLexema(actual, 1);
+                    return new Select(nombreTabla);
+                }
             }
 
             return null;

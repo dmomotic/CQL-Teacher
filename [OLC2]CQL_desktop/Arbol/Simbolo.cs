@@ -28,5 +28,10 @@
         {
             return tipo.Equals(Tipos.OBJETO);
         }
+
+        public bool IsTabla()
+        {
+            return tipo.Equals(Tipos.TABLA);
+        }
     }
 }
