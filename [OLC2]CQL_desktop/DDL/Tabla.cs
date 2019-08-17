@@ -4,6 +4,7 @@ using _OLC2_CQL_desktop.DML;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace _OLC2_CQL_desktop.DDL
 {
@@ -18,6 +19,7 @@ namespace _OLC2_CQL_desktop.DDL
             data = new DataTable(nombre);
             this.columnas = columnas;
             CrearColumnas();
+            SetPrimaryKey();
         }
 
         private void CrearColumnas()
@@ -28,20 +30,50 @@ namespace _OLC2_CQL_desktop.DDL
                 {
                     ColumnName = col.nombre,
                     DataType = ObtenerTipo(col),
-                    ReadOnly = false
+                    ReadOnly = false,
                 };
+                //Si la columna es tipo COUNTER
+                if (col.tipo.Equals(Tipos.COUNTER))
+                {
+                    //Solo se puede asignar counter a las llaves primarias
+                    if (col.primaryKey)
+                    {
+                        dtc.AutoIncrement = true;
+                        dtc.AutoIncrementSeed = 1;
+                        dtc.AutoIncrementStep = 1;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error!! no se puede asignar un tipo de columna COUNTER al atributo " + col.nombre + " porque no es una llave primaria");
+                    }
+                }
                 data.Columns.Add(dtc);
             }
         }
 
         public void SetPrimaryKey()
         {
-
+            var items = columnas.Where(col => col.primaryKey==true);
+            int cantidadDeLlavesPrimarias = items.Count();
+            //Si no hay llaves primarias
+            if (cantidadDeLlavesPrimarias <= 0) return;
+            //Si hay llaves primarias
+            DataColumn[] primaryKeyColumns = new DataColumn[cantidadDeLlavesPrimarias];
+            int aux = 0;
+            foreach (Columna col in columnas)
+            {
+                if (col.primaryKey)
+                {
+                    primaryKeyColumns[aux] = data.Columns[col.nombre];
+                    aux++;
+                }
+            }
+            data.PrimaryKey = primaryKeyColumns;
         }
 
         private Type ObtenerTipo(Columna columna)
         {
-            if (columna.tipo.Equals(Tipos.INT))
+            if (columna.tipo.Equals(Tipos.INT) || columna.tipo.Equals(Tipos.COUNTER))
             {
                 return typeof(int);
             }

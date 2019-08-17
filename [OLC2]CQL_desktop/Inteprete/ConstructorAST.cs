@@ -310,6 +310,14 @@ namespace _OLC2_CQL_desktop.Inteprete
                     LinkedList<Columna> columnas = (LinkedList<Columna>)Recorrer(actual.LastChild);
                     return new CreateTable(nombre, columnas);
                 } 
+
+                // exists nombreTabla COLUMNAS_TABLA
+                if(numero_hijos == 3)
+                {
+                    string nombre = GetLexema(actual, 1);
+                    LinkedList<Columna> columnas = (LinkedList<Columna>)Recorrer(actual.LastChild);
+                    return new CreateTable(true, nombre, columnas);
+                }
             }
 
             if (SoyElNodo("COLUMNAS_TABLA", actual))
@@ -438,7 +446,10 @@ namespace _OLC2_CQL_desktop.Inteprete
             {
                 return Tipos.TIME;
             }
-
+            if (nodo.Token.Text.Equals("counter", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return Tipos.COUNTER;
+            }
             return Tipos.STRUCT;
         }
 

@@ -1,3 +1,32 @@
+CREATE TABLE IF NOT EXISTS Estudiante(
+	id counter PRIMARY KEY,
+	nombre string,
+	pais string
+);
+
+CREATE TABLE Estudiante(
+	id counter PRIMARY KEY,
+	nombre string,
+	pais string
+);
+
+
+/*
+CREATE TABLE Estudiante(
+	id counter PRIMARY KEY,
+	nombre string,
+	pais string
+);
+
+INSERT INTO Estudiante(nombre,pais) VALUES ("Juan Valdez","Colombia");
+INSERT INTO Estudiante(nombre,pais) VALUES ("Diego","Guatemala");
+INSERT INTO Estudiante(nombre,pais) VALUES ("Monica","Colombia");
+INSERT INTO Estudiante(nombre,pais) VALUES ("Andrea","Peru");
+
+Select * from Estudiante;
+*/
+
+/*
 date @fecha = '2019-08-16';
 time @hora = '10:50:32';
 print(@fecha);
@@ -5,6 +34,7 @@ print(@hora);
 
 @fecha = '2020-07-21';
 print(@fecha);
+*/
 
 /*
 CREATE TABLE Estudiante(

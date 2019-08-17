@@ -37,7 +37,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 r_values = ToTerm("values"),
                 r_select = ToTerm("select"),
                 r_from = ToTerm("from"),
-                r_where = ToTerm("where")
+                r_where = ToTerm("where"),
+                r_counter = ToTerm("counter")
             ;
 
             //Le indicamos al parser las palabras reservadas, para evitar conflictos al reconocer ids
@@ -69,7 +70,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 "values",
                 "select",
                 "from",
-                "where"
+                "where",
+                "counter"
             );
 
             /*** SIMBOLOS DEL LENGUAJE ***/
@@ -131,12 +133,10 @@ namespace _OLC2_CQL_desktop.Inteprete
                 PRINT = new NonTerminal("PRINT"),
                 EXPRESION_ARITMETICA = new NonTerminal("EXPRESION_ARITMETICA"),
                 LITERAL = new NonTerminal("LITERAL"),
-                INSTRUCCIONES_DDL = new NonTerminal("INSTRUCCIONES_DDL"),
                 INSTRUCCION_DDL = new NonTerminal("INSTRUCCION_DDL"),
                 CREATE_TABLE = new NonTerminal("CREATE_TABLE"),
                 COLUMNAS_TABLA = new NonTerminal("COLUMNAS_TABLA"),
                 COLUMNA_TABLA = new NonTerminal("COLUMNA_TABLA"),
-                INSTRUCCIONES_DML = new NonTerminal("INSTRUCCIONES_DML"),
                 INSTRUCCION_DML = new NonTerminal("INSTRUCCION_DML"),
                 INSERT = new NonTerminal("INSERT"),
                 SELECT = new NonTerminal("SELECT")
@@ -156,7 +156,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | ALTER_TYPE //ya
                 | DELETE_TYPE //ya
                 | PRINT //ya
-                | INSTRUCCIONES_DDL
+                | INSTRUCCION_DDL
                 | INSTRUCCION_DML
                 ;
 
@@ -179,6 +179,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | r_boolean
                 | r_date
                 | r_time
+                | r_counter //solo para los atributos de la tabla
                 ;
 
             DECLARACION.Rule = id + LISTA_IDS_ARR + ptocoma //Estudiante @est; - ya
@@ -239,23 +240,19 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             ID_ARR.Rule = arroba + id; // @id
 
-            INSTRUCCIONES_DDL.Rule = MakePlusRule(INSTRUCCIONES_DDL, INSTRUCCION_DDL);
-
             INSTRUCCION_DDL.Rule = CREATE_TABLE
                 ;
 
             CREATE_TABLE.Rule = r_create + r_table + id + parizq + COLUMNAS_TABLA + parder + ptocoma // ya
-                | r_create + r_table + r_if + r_not + r_exists + id + parizq + COLUMNAS_TABLA + parder + ptocoma
+                | r_create + r_table + r_if + r_not + r_exists + id + parizq + COLUMNAS_TABLA + parder + ptocoma //ya
                 ;
 
             COLUMNAS_TABLA.Rule = MakePlusRule(COLUMNAS_TABLA, coma, COLUMNA_TABLA); //ya
 
-            COLUMNA_TABLA.Rule = id + TIPO_DATO + r_primary + r_key
+            COLUMNA_TABLA.Rule = id + TIPO_DATO + r_primary + r_key //ya
                 | id + TIPO_DATO //ya
                 | r_primary + r_key + parizq + LISTA_IDS + parder
                 ;
-
-            INSTRUCCIONES_DML.Rule = MakePlusRule(INSTRUCCIONES_DML, INSTRUCCION_DML);
 
             INSTRUCCION_DML.Rule = INSERT //ya
                 | SELECT
@@ -280,8 +277,7 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             /*** NODOS QUE NO ME SON DE UTILIDAD EN EL ARBOL ***/
             MarkTransient(
-                INICIO, INSTRUCCION, TIPO_DATO, ID_ARR, EXPRESION, INSTRUCCIONES_DDL, INSTRUCCION_DDL,
-                INSTRUCCIONES_DML, INSTRUCCION_DML
+                INICIO, INSTRUCCION, TIPO_DATO, ID_ARR, EXPRESION, INSTRUCCION_DDL, INSTRUCCION_DML
             );
 
 

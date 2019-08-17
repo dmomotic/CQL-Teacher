@@ -1,6 +1,6 @@
 ﻿public enum Tipos
 {
-    STRING, INT, DOUBLE, BOOLEAN, NULL, STRUCT, OBJETO, TABLA, DATE, TIME
+    STRING, INT, DOUBLE, BOOLEAN, NULL, STRUCT, OBJETO, TABLA, DATE, TIME, COUNTER
 }
 
 public enum Operaciones
