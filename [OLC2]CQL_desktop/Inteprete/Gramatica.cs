@@ -94,6 +94,8 @@ namespace _OLC2_CQL_desktop.Inteprete
             NumberLiteral entero = new NumberLiteral("entero", NumberOptions.IntOnly);
             IdentifierTerminal id = new IdentifierTerminal("id");
             StringLiteral cadena = new StringLiteral("cadena", "\"", StringOptions.AllowsAllEscapes);
+            RegexBasedTerminal date = new RegexBasedTerminal("date", "'[0-9]{4}-[0-9]{2}-[0-9]{2}'");
+            RegexBasedTerminal time = new RegexBasedTerminal("time", "'[0-9]{2}:[0-9]{2}:[0-9]{2}'");
 
             /*** COMENTARIOS DE UNA Y VARIAS LINEAS ***/
             CommentTerminal comentarioMultilinea = new CommentTerminal("comentarioMultiLinea", "/*", "*/");
@@ -205,6 +207,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | cadena //ya
                 | r_true //ya
                 | r_false //ya
+                | date
+                | time
                 ;
 
             EXPRESION_ARITMETICA.Rule = EXPRESION + mas + EXPRESION //ya

@@ -50,6 +50,11 @@ namespace _OLC2_CQL_desktop
 
         private void btnAnalizar_Click(object sender, EventArgs e)
         {
+            Analizar();
+        }
+
+        private void Analizar()
+        {
             if (!txtEntrada.Text.Equals(string.Empty))
             {
                 Gramatica grammar = new Gramatica();
@@ -63,12 +68,12 @@ namespace _OLC2_CQL_desktop
                     j.graficar(arbol.Root);
                     ConstructorAST constructorAST = new ConstructorAST();
                     AST ast = constructorAST.Analizar(arbol.Root);
-                    if(ast != null)
+                    if (ast != null)
                     {
                         Entorno global = new Entorno();
-                        foreach(INodoAST ins in ast.instrucciones)
+                        foreach (INodoAST ins in ast.instrucciones)
                         {
-                            if(ins is IInstruccion)
+                            if (ins is IInstruccion)
                             {
                                 ((IInstruccion)ins).Ejecutar(global);
                             }

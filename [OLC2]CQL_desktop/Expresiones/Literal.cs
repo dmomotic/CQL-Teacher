@@ -1,4 +1,5 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
+using System;
 
 namespace _OLC2_CQL_desktop.Expresiones
 {
@@ -30,6 +31,17 @@ namespace _OLC2_CQL_desktop.Expresiones
             {
                 return Tipos.STRING;
             }
+            else if(valor is DateTime)
+            {
+                if(((DateTime)valor).TimeOfDay == Convert.ToDateTime("00:00:00").TimeOfDay)
+                {
+                    return Tipos.DATE;
+                }
+                else
+                {
+                    return Tipos.TIME;
+                }
+            }
             else
             {
                 return Tipos.NULL;
@@ -38,6 +50,13 @@ namespace _OLC2_CQL_desktop.Expresiones
 
         public object GetValor(Entorno e)
         {
+            if(valor is DateTime)
+            {
+                if (((DateTime)valor).TimeOfDay == Convert.ToDateTime("00:00:00").TimeOfDay)
+                    return ((DateTime)valor).ToShortDateString();
+                else
+                    return ((DateTime)valor).TimeOfDay;
+            }
             return valor;
         }
     }

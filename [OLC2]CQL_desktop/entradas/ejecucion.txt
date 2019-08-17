@@ -1,3 +1,12 @@
+date @fecha = '2019-08-16';
+time @hora = '10:50:32';
+print(@fecha);
+print(@hora);
+
+@fecha = '2020-07-21';
+print(@fecha);
+
+/*
 CREATE TABLE Estudiante(
 	id int PRIMARY KEY,
 	nombre string,
@@ -12,6 +21,7 @@ INSERT INTO Estudiante VALUES (5,"Jessica","Colombia");
 INSERT INTO Estudiante VALUES (6,"Luis","Peru");
 
 Select * from Estudiante;
+*/
 
 //INSERT INTO Estudiante(id,nombre) VALUES (2,"Diego"); 
 

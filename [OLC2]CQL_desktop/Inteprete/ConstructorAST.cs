@@ -5,6 +5,7 @@ using _OLC2_CQL_desktop.Expresiones;
 using _OLC2_CQL_desktop.Instrucciones;
 using _OLC2_CQL_desktop.Structs;
 using Irony.Parsing;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -75,6 +76,22 @@ namespace _OLC2_CQL_desktop.Inteprete
                 {
                     string aux = GetLexema(actual, 0);
                     return new Identificador(aux);
+                }
+
+                if(SoyElNodo("date", actual.ChildNodes[0]))
+                {
+                    string aux = GetLexema(actual, 0);
+                    aux = aux.Replace("\'", "");
+                    DateTime fecha = Convert.ToDateTime(aux);
+                    return new Literal(fecha);
+                }
+
+                if(SoyElNodo("time", actual.ChildNodes[0]))
+                {
+                    string aux = GetLexema(actual, 0);
+                    aux = aux.Replace("\'", "");
+                    DateTime hora = Convert.ToDateTime(aux);
+                    return new Literal(hora);
                 }
 
                 return null;
@@ -412,6 +429,14 @@ namespace _OLC2_CQL_desktop.Inteprete
             if (nodo.Token.Text.Equals("string", System.StringComparison.InvariantCultureIgnoreCase))
             {
                 return Tipos.STRING;
+            }
+            if (nodo.Token.Text.Equals("date", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return Tipos.DATE;
+            }
+            if (nodo.Token.Text.Equals("time", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return Tipos.TIME;
             }
 
             return Tipos.STRUCT;
