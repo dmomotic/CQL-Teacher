@@ -334,20 +334,31 @@ namespace _OLC2_CQL_desktop.Inteprete
             if (SoyElNodo("COLUMNA_TABLA", actual))
             {
                 int numero_hijos = actual.ChildNodes.Count;
-
-                string nombre = GetLexema(actual, 0);
-                Tipos tipo = GetTipo(actual.ChildNodes[1]);
-
+                
                 //id TIPO_DATO primary
                 if (numero_hijos == 3)
-                {    
+                {
+                    string nombre = GetLexema(actual, 0);
+                    Tipos tipo = GetTipo(actual.ChildNodes[1]);
                     return new Columna(nombre, tipo, true);
                 }
 
-                //id TIPO_DATO
+                //primary LISTA_IDS
                 if (numero_hijos == 2)
                 {
-                    return new Columna(nombre, tipo);
+                    //primary LISTA_IDS
+                    if (SoyElNodo("LISTA_IDS", actual.LastChild))
+                    {
+                        LinkedList<string> ids_columnas_pk = GetIds(actual.LastChild);
+                        return new Columna(ids_columnas_pk);
+                    }
+                    //id TIPO_DATO
+                    else
+                    {
+                        string nombre = GetLexema(actual, 0);
+                        Tipos tipo = GetTipo(actual.ChildNodes[1]);
+                        return new Columna(nombre, tipo);
+                    }
                 }
             }
 

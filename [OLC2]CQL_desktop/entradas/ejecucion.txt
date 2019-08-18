@@ -1,3 +1,47 @@
+CREATE TABLE Perro(
+	id counter,
+	nombre string,
+	PRIMARY KEY (id)
+);
+
+INSERT INTO Perro(nombre) VALUES ("perro1");
+INSERT INTO Perro(nombre) VALUES ("perro2");
+INSERT INTO Perro(nombre) VALUES ("perro3");
+INSERT INTO Perro(nombre) VALUES ("perro3");
+
+SELECT * FROM Perro;
+
+
+/*
+CREATE TABLE Perro(
+	id int,
+	nombre string,
+	PRIMARY KEY (id, nombre)
+);
+
+INSERT INTO Perro VALUES (1,"perro1");
+INSERT INTO Perro VALUES (2,"perro2");
+INSERT INTO Perro VALUES (3,"perro3");
+INSERT INTO Perro VALUES (3,"perro3");
+
+SELECT * FROM Perro;
+*/
+
+/*
+CREATE TABLE Estudiante(
+	id counter PRIMARY KEY,
+	nombre string,
+	pais string,
+	nacimiento date
+);
+
+INSERT INTO Estudiante(nombre,pais,nacimiento) VALUES ("Andrea","Peru",'1994-07-21');
+INSERT INTO Estudiante(nombre,pais,nacimiento) VALUES ("Andrea","Peru",'2000-10-24');
+
+Select * from Estudiante;
+*/
+
+/*
 CREATE TABLE IF NOT EXISTS Estudiante(
 	id counter PRIMARY KEY,
 	nombre string,
@@ -9,7 +53,7 @@ CREATE TABLE Estudiante(
 	nombre string,
 	pais string
 );
-
+*/
 
 /*
 CREATE TABLE Estudiante(

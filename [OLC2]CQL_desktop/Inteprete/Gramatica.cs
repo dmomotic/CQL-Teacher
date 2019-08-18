@@ -208,8 +208,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | cadena //ya
                 | r_true //ya
                 | r_false //ya
-                | date
-                | time
+                | date //ya
+                | time //ya
                 ;
 
             EXPRESION_ARITMETICA.Rule = EXPRESION + mas + EXPRESION //ya

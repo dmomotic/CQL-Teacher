@@ -24,8 +24,13 @@ namespace _OLC2_CQL_desktop.DDL
 
         private void CrearColumnas()
         {
-            foreach(Columna col in columnas)
+            var columnasConIdsPk = columnas.Where(co => co.ids_columnas_pk != null).FirstOrDefault();
+
+            foreach (Columna col in columnas)
             {
+                //Validacion para saltar la columna que solo tiene una lista de ids para llaves primarias
+                if (col.ids_columnas_pk != null) continue;
+
                 DataColumn dtc = new DataColumn
                 {
                     ColumnName = col.nombre,
@@ -36,7 +41,7 @@ namespace _OLC2_CQL_desktop.DDL
                 if (col.tipo.Equals(Tipos.COUNTER))
                 {
                     //Solo se puede asignar counter a las llaves primarias
-                    if (col.primaryKey)
+                    if (col.primaryKey || (columnasConIdsPk!=null && columnasConIdsPk.ids_columnas_pk.Contains(col.nombre)))
                     {
                         dtc.AutoIncrement = true;
                         dtc.AutoIncrementSeed = 1;
@@ -53,13 +58,31 @@ namespace _OLC2_CQL_desktop.DDL
 
         public void SetPrimaryKey()
         {
+            DataColumn[] primaryKeyColumns;
+            int aux = 0;
+
             var items = columnas.Where(col => col.primaryKey==true);
             int cantidadDeLlavesPrimarias = items.Count();
             //Si no hay llaves primarias
-            if (cantidadDeLlavesPrimarias <= 0) return;
+            if (cantidadDeLlavesPrimarias <= 0)
+            {
+                //Si no hay ninguna columna con los ids de las llaves primarias
+                var columnasConIdsPk = columnas.Where(col => col.ids_columnas_pk != null).FirstOrDefault();
+                if (columnasConIdsPk == null) return;
+
+                //Si hay una columna con los ids
+                cantidadDeLlavesPrimarias = columnasConIdsPk.ids_columnas_pk.Count;
+                primaryKeyColumns = new DataColumn[cantidadDeLlavesPrimarias];
+                foreach(string nombreColuma in columnasConIdsPk.ids_columnas_pk)
+                {
+                    primaryKeyColumns[aux] = data.Columns[nombreColuma];
+                    aux++;
+                }
+                data.PrimaryKey = primaryKeyColumns;
+                return;
+            }
             //Si hay llaves primarias
-            DataColumn[] primaryKeyColumns = new DataColumn[cantidadDeLlavesPrimarias];
-            int aux = 0;
+            primaryKeyColumns = new DataColumn[cantidadDeLlavesPrimarias];
             foreach (Columna col in columnas)
             {
                 if (col.primaryKey)
@@ -85,6 +108,10 @@ namespace _OLC2_CQL_desktop.DDL
             {
                 return typeof(bool);
             }
+            if(columna.tipo.Equals(Tipos.DATE) || columna.tipo.Equals(Tipos.TIME))
+            {
+                return typeof(DateTime);
+            }
             if (columna.tipo.Equals(Tipos.STRING))
             {
                 return typeof(string);
@@ -95,11 +122,21 @@ namespace _OLC2_CQL_desktop.DDL
         public void Insert(LinkedList<Celda> celdas)
         {
             DataRow myDataRow = data.NewRow();
+            string registro = "";
             foreach(Celda celda in celdas)
             {
                 myDataRow[celda.id] = celda.valor;
+                registro += celda.valor + " ";
             }
-            data.Rows.Add(myDataRow);
+            try
+            {
+                data.Rows.Add(myDataRow);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No se puede insertar el registro: " + registro + " posible llave primaria duplicada");
+            }
+            
         }
 
         public DataRow[] Select()

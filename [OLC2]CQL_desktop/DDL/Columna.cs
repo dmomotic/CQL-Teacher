@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace _OLC2_CQL_desktop.DDL
 {
     class Columna
@@ -6,6 +8,13 @@ namespace _OLC2_CQL_desktop.DDL
         public string nombre;
         public Tipos tipo;
         public bool primaryKey;
+        //Variable auxiliar utilizada para declarar un conjunto de columnas como PrimaryKey
+        public LinkedList<string> ids_columnas_pk;
+
+        public Columna(LinkedList<string> ids_columnas_pk)
+        {
+            this.ids_columnas_pk = ids_columnas_pk;
+        }
 
         public Columna(string nombre, Tipos tipo)
         {
