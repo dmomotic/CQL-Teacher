@@ -33,5 +33,10 @@
         {
             return tipo.Equals(Tipos.TABLA);
         }
+
+        public bool IsMap()
+        {
+            return tipo.Equals(Tipos.MAP);
+        }
     }
 }

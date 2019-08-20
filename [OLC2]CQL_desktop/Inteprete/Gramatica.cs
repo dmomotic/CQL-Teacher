@@ -38,7 +38,9 @@ namespace _OLC2_CQL_desktop.Inteprete
                 r_select = ToTerm("select"),
                 r_from = ToTerm("from"),
                 r_where = ToTerm("where"),
-                r_counter = ToTerm("counter")
+                r_counter = ToTerm("counter"),
+                r_map = ToTerm("map"),
+                r_get = ToTerm("get")
             ;
 
             //Le indicamos al parser las palabras reservadas, para evitar conflictos al reconocer ids
@@ -71,7 +73,9 @@ namespace _OLC2_CQL_desktop.Inteprete
                 "select",
                 "from",
                 "where",
-                "counter"
+                "counter",
+                "map",
+                "get"
             );
 
             /*** SIMBOLOS DEL LENGUAJE ***/
@@ -89,7 +93,11 @@ namespace _OLC2_CQL_desktop.Inteprete
                 llavizq = ToTerm("{"),
                 llavder = ToTerm("}"),
                 arroba = ToTerm("@"),
-                dosptos = ToTerm(":")
+                dosptos = ToTerm(":"),
+                mayque = ToTerm(">"),
+                menque = ToTerm("<"),
+                corizq = ToTerm("["),
+                corder = ToTerm("]")
             ;
 
             /*** EXPRESIONES REGULARES ***/
@@ -145,7 +153,12 @@ namespace _OLC2_CQL_desktop.Inteprete
                 OBJECT_PAIRS = new NonTerminal("OBJECT_PAIRS"),
                 OBJECT_PAIR = new NonTerminal("OBJECT_PAIR"),
                 COLUMNAS_SELECT = new NonTerminal("COLUMNAS_SELECT"),
-                COLUMNA_SELECT = new NonTerminal("COLUMNA_SELECT")
+                COLUMNA_SELECT = new NonTerminal("COLUMNA_SELECT"),
+                INSTRUCCION_FCL = new NonTerminal("INSTRUCCION_FCL"),
+                MAP = new NonTerminal("MAP"),
+                LLAMADA_METODO_FUNCION = new NonTerminal("LLAMADA_METODO_FUNCION"),
+                COLLECTION_INSERT = new NonTerminal("COLLECTION_INSERT"),
+                COLLECTION_GET = new NonTerminal("COLLECTION_GET")
             ;
 
             #endregion
@@ -164,6 +177,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | PRINT //ya
                 | INSTRUCCION_DDL
                 | INSTRUCCION_DML
+                | INSTRUCCION_FCL
+                | LLAMADA_METODO_FUNCION
                 ;
 
             PRINT.Rule = r_print + parizq + EXPRESION + parder + ptocoma ; //ya
@@ -207,6 +222,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | ACCESO_OBJETO //ya
                 | llavizq + LISTA_EXPRESIONES + llavder //aux para asignacion de objetos
                 | OBJECT_NOTATION //para la creacion de objectos tipo { "llave":valor }
+                | COLLECTION_GET
                 ;
 
             LITERAL.Rule = entero //ya
@@ -286,6 +302,24 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             OBJECT_PAIR.Rule = EXPRESION + dosptos + EXPRESION;
 
+            INSTRUCCION_FCL.Rule = MAP
+                ;
+
+            MAP.Rule = r_map + LISTA_IDS_ARR + igual + r_new + r_map + menque + TIPO_DATO + coma + TIPO_DATO + mayque + ptocoma
+                | r_map + LISTA_IDS_ARR + igual + corizq + OBJECT_PAIRS + corder + ptocoma
+                ;
+
+            LLAMADA_METODO_FUNCION.Rule = arroba + id + punto + id + parizq + parder + ptocoma //@var.metodo()
+                | COLLECTION_INSERT
+                ;
+
+            COLLECTION_INSERT.Rule = arroba + id + punto + r_insert + parizq + LISTA_EXPRESIONES + parder + ptocoma //@var.Insert(par1, par2, par3)
+                ;
+
+            COLLECTION_GET.Rule = arroba + id + punto + r_get + parizq + LISTA_EXPRESIONES + parder //@var.Get(valor)
+                ;
+
+
             /*** PRECEDENCIAS ***/
             RegisterOperators(5, Associativity.Left, mas, menos);
             RegisterOperators(6, Associativity.Left, por, div);
@@ -294,12 +328,14 @@ namespace _OLC2_CQL_desktop.Inteprete
             MarkPunctuation(
                 ptocoma, parizq, parder, arroba, igual, llavizq, llavder, coma, punto,
                 r_create, r_type, r_if, r_not, r_new, r_alter, r_delete, r_add,
-                r_print, r_table, r_key, r_insert, r_into, r_values, r_select, r_from, r_where, dosptos
+                r_print, r_table, r_key, r_insert, r_into, r_values, r_select, r_from, r_where, dosptos,
+                r_map, corizq, corder, r_get
             );
 
             /*** NODOS QUE NO ME SON DE UTILIDAD EN EL ARBOL ***/
             MarkTransient(
-                INICIO, INSTRUCCION, TIPO_DATO, ID_ARR, EXPRESION, INSTRUCCION_DDL, INSTRUCCION_DML, OBJECT_NOTATION
+                INICIO, INSTRUCCION, TIPO_DATO, ID_ARR, EXPRESION, INSTRUCCION_DDL, INSTRUCCION_DML, OBJECT_NOTATION,
+                INSTRUCCION_FCL, LLAMADA_METODO_FUNCION
             );
 
 

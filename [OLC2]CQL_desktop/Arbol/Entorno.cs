@@ -1,4 +1,5 @@
-﻿using _OLC2_CQL_desktop.DDL;
+﻿using _OLC2_CQL_desktop.Collections;
+using _OLC2_CQL_desktop.DDL;
 using _OLC2_CQL_desktop.Structs;
 using System;
 using System.Collections;
@@ -41,6 +42,11 @@ namespace _OLC2_CQL_desktop.Arbol
         public void InsertarObjeto(string identificador, Objeto objeto)
         {
             this.Add(identificador,objeto);
+        }
+
+        public void InsertarMap(string identificador, MapCollection map)
+        {
+            this.Add(identificador, map);
         }
 
         public void ActualizarObjeto(string identificador, Objeto objeto)

@@ -1,3 +1,16 @@
+Map @var2 = [1: "Diego", 2: "Karen", 3: "Pedro"];
+@var2.Insert(4,"Monica");
+@var2.Insert(2,"Juan");
+
+print(@var2.Get(2));
+
+
+/*
+Map @var1 = new Map<int, string>;
+Map @var2 = [1: "Diego", 2: "Karen", 3: "Pedro"];
+*/
+
+/*
 Create type Estudiante(
 	nombre string,
 	carnet int
@@ -15,6 +28,7 @@ INSERT INTO Persona(edad,alumno) VALUES (10,{"nombre":"Monica", "carnet":2018});
 INSERT INTO Persona(edad,alumno) VALUES (18,{"nombre":"Pedro", "carnet":2016});
 
 SELECT edad, alumno.carnet FROM Persona;
+*/
 
 /*
 Create type Estudiante(

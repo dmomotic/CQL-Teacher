@@ -3,7 +3,9 @@ using _OLC2_CQL_desktop.Clases;
 using _OLC2_CQL_desktop.DDL;
 using _OLC2_CQL_desktop.DML;
 using _OLC2_CQL_desktop.Expresiones;
+using _OLC2_CQL_desktop.FCL;
 using _OLC2_CQL_desktop.Instrucciones;
+using _OLC2_CQL_desktop.InstruccionesCollections;
 using _OLC2_CQL_desktop.Structs;
 using Irony.Parsing;
 using System;
@@ -454,7 +456,55 @@ namespace _OLC2_CQL_desktop.Inteprete
                     return new AccesoColumna(nombre, atributos);
                 }
             }
-            
+
+            if (SoyElNodo("MAP", actual))
+            {
+                int numero_hijos = actual.ChildNodes.Count;
+
+                //LISTA_IDS_ARR < tipo tipo >
+                if (numero_hijos == 5)
+                {
+                    LinkedList<string> identificadores = (LinkedList<string>)Recorrer(actual.FirstChild);
+                    Tipos tipoClave = GetTipo(actual.ChildNodes[2]);
+                    Tipos tipoValor = GetTipo(actual.ChildNodes[3]);
+                    return new Map(identificadores,tipoClave,tipoValor);
+                }
+
+                //LISTA_IDS_ARR OBJECT_PAIRS
+                if(numero_hijos == 2)
+                {
+                    LinkedList<string> identificadores = (LinkedList<string>)Recorrer(actual.FirstChild);
+                    LinkedList<ClaveValor> valores = ((InstanciaObjecto)Recorrer(actual.LastChild)).atributos;
+                    return new Map(identificadores, valores);
+                }
+            }
+
+            if (SoyElNodo("LISTA_IDS_ARR", actual))
+            {
+                LinkedList<string> ids = new LinkedList<string>();
+                foreach (ParseTreeNode hijo in actual.ChildNodes)
+                {
+                    ids.AddLast(hijo.Token.Text);
+                }
+                return ids;
+            }
+
+            if (SoyElNodo("COLLECTION_INSERT", actual))
+            {
+                //id LISTA_EXPRESIONES
+                string id = GetLexema(actual, 0);
+                LinkedList<IExpresion> valores = (LinkedList<IExpresion>)Recorrer(actual.LastChild);
+                return new CollectionInsert(id,valores);
+            }
+
+            if (SoyElNodo("COLLECTION_GET", actual))
+            {
+                //id LISTA_EXPRESIONES
+                string id = GetLexema(actual, 0);
+                LinkedList<IExpresion> valor = (LinkedList<IExpresion>)Recorrer(actual.LastChild);
+                return new CollectionGet(id,valor);
+            }
+
             return null;
         }
 
