@@ -10,6 +10,8 @@ namespace _OLC2_CQL_desktop.DDL
         public bool primaryKey;
         //Variable auxiliar utilizada para declarar un conjunto de columnas como PrimaryKey
         public LinkedList<string> ids_columnas_pk;
+        //Variable utilizada para las columnas de tipo objeto
+        public string idStruct;
 
         public Columna(LinkedList<string> ids_columnas_pk)
         {
@@ -27,6 +29,13 @@ namespace _OLC2_CQL_desktop.DDL
             this.nombre = nombre;
             this.tipo = tipo;
             this.primaryKey = primaryKey;
+        }
+
+        public Columna(string nombre, string idStruct)
+        {
+            this.nombre = nombre;
+            this.idStruct = idStruct;
+            this.tipo = Tipos.OBJETO;
         }
 
     }

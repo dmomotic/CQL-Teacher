@@ -1,5 +1,6 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
 using _OLC2_CQL_desktop.DDL;
+using _OLC2_CQL_desktop.Structs;
 using System;
 using System.Collections.Generic;
 using System.Data;

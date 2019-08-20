@@ -56,6 +56,7 @@
     <Compile Include="Arbol\NodoAST.cs" />
     <Compile Include="Arbol\Simbolo.cs" />
     <Compile Include="Arbol\Tipos.cs" />
+    <Compile Include="Clases\ClaveValor.cs" />
     <Compile Include="DDL\Columna.cs" />
     <Compile Include="DDL\CreateTable.cs" />
     <Compile Include="DDL\Tabla.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Expresiones\Aritmetica.cs" />
     <Compile Include="Expresiones\Casteo.cs" />
     <Compile Include="Expresiones\Identificador.cs" />
+    <Compile Include="Expresiones\InstanciaObjecto.cs" />
     <Compile Include="Expresiones\Literal.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

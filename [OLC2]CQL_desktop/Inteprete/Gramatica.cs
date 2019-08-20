@@ -88,7 +88,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 igual = ToTerm("="),
                 llavizq = ToTerm("{"),
                 llavder = ToTerm("}"),
-                arroba = ToTerm("@")
+                arroba = ToTerm("@"),
+                dosptos = ToTerm(":")
             ;
 
             /*** EXPRESIONES REGULARES ***/
@@ -139,7 +140,10 @@ namespace _OLC2_CQL_desktop.Inteprete
                 COLUMNA_TABLA = new NonTerminal("COLUMNA_TABLA"),
                 INSTRUCCION_DML = new NonTerminal("INSTRUCCION_DML"),
                 INSERT = new NonTerminal("INSERT"),
-                SELECT = new NonTerminal("SELECT")
+                SELECT = new NonTerminal("SELECT"),
+                OBJECT_NOTATION = new NonTerminal("OBJECT_NOTATION"),
+                OBJECT_PAIRS = new NonTerminal("OBJECT_PAIRS"),
+                OBJECT_PAIR = new NonTerminal("OBJECT_PAIR")
             ;
 
             #endregion
@@ -200,6 +204,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | LITERAL //ya
                 | ACCESO_OBJETO //ya
                 | llavizq + LISTA_EXPRESIONES + llavder //aux para asignacion de objetos
+                | OBJECT_NOTATION //para la creacion de objectos tipo { "llave":valor }
                 ;
 
             LITERAL.Rule = entero //ya
@@ -251,6 +256,7 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             COLUMNA_TABLA.Rule = id + TIPO_DATO + r_primary + r_key //ya
                 | id + TIPO_DATO //ya
+                | id + id
                 | r_primary + r_key + parizq + LISTA_IDS + parder
                 ;
 
@@ -264,6 +270,12 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             SELECT.Rule = r_select + por + r_from + id + ptocoma;
 
+            OBJECT_NOTATION.Rule = llavizq + OBJECT_PAIRS + llavder;
+
+            OBJECT_PAIRS.Rule = MakePlusRule(OBJECT_PAIRS, coma, OBJECT_PAIR);
+
+            OBJECT_PAIR.Rule = EXPRESION + dosptos + EXPRESION;
+
             /*** PRECEDENCIAS ***/
             RegisterOperators(5, Associativity.Left, mas, menos);
             RegisterOperators(6, Associativity.Left, por, div);
@@ -272,12 +284,12 @@ namespace _OLC2_CQL_desktop.Inteprete
             MarkPunctuation(
                 ptocoma, parizq, parder, arroba, igual, llavizq, llavder, coma, punto,
                 r_create, r_type, r_if, r_not, r_new, r_alter, r_delete, r_add,
-                r_print, r_table, r_key, r_insert, r_into, r_values, r_select, r_from, r_where
+                r_print, r_table, r_key, r_insert, r_into, r_values, r_select, r_from, r_where, dosptos
             );
 
             /*** NODOS QUE NO ME SON DE UTILIDAD EN EL ARBOL ***/
             MarkTransient(
-                INICIO, INSTRUCCION, TIPO_DATO, ID_ARR, EXPRESION, INSTRUCCION_DDL, INSTRUCCION_DML
+                INICIO, INSTRUCCION, TIPO_DATO, ID_ARR, EXPRESION, INSTRUCCION_DDL, INSTRUCCION_DML, OBJECT_NOTATION
             );
 
 

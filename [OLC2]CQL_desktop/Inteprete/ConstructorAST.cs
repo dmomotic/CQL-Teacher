@@ -1,4 +1,5 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
+using _OLC2_CQL_desktop.Clases;
 using _OLC2_CQL_desktop.DDL;
 using _OLC2_CQL_desktop.DML;
 using _OLC2_CQL_desktop.Expresiones;
@@ -343,9 +344,14 @@ namespace _OLC2_CQL_desktop.Inteprete
                     return new Columna(nombre, tipo, true);
                 }
 
-                //primary LISTA_IDS
                 if (numero_hijos == 2)
                 {
+                    //persona Atributo
+                    if (SoyElNodo("id", actual.LastChild))
+                    {
+                        string nombre = GetLexema(actual, 0);
+                        return new Columna(nombre, Tipos.OBJETO);
+                    }
                     //primary LISTA_IDS
                     if (SoyElNodo("LISTA_IDS", actual.LastChild))
                     {
@@ -389,6 +395,25 @@ namespace _OLC2_CQL_desktop.Inteprete
                     string nombreTabla = GetLexema(actual, 1);
                     return new Select(nombreTabla);
                 }
+            }
+
+            if (SoyElNodo("OBJECT_PAIRS", actual))
+            {
+                LinkedList<ClaveValor> atributos = new LinkedList<ClaveValor>();
+                foreach(ParseTreeNode hijo in actual.ChildNodes)
+                {
+                    ClaveValor claveValor = (ClaveValor)Recorrer(hijo);
+                    atributos.AddLast(claveValor);
+                }
+                return new InstanciaObjecto(atributos);
+            }
+
+            if (SoyElNodo("OBJECT_PAIR", actual))
+            {
+                //clave valor
+                IExpresion clave = (IExpresion)Recorrer(actual.FirstChild);
+                IExpresion valor = (IExpresion)Recorrer(actual.LastChild);
+                return new ClaveValor(clave, valor);
             }
 
             return null;

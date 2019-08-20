@@ -1,4 +1,5 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
+using System.Collections;
 
 namespace _OLC2_CQL_desktop.Structs
 {
@@ -32,6 +33,18 @@ namespace _OLC2_CQL_desktop.Structs
         public int GetNumeroDeAtributos()
         {
             return atributos.Count;
+        }
+
+        public override string ToString()
+        {
+            string salida = "{ ";
+            foreach(DictionaryEntry pair in atributos)
+            {
+                salida += "\""+pair.Key+"\": ";
+                salida += pair.Value + " ";
+            }
+            salida += "}";
+            return salida;
         }
     }
 }

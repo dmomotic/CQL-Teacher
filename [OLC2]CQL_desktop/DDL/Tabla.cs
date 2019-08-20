@@ -1,6 +1,7 @@
 ﻿
 using _OLC2_CQL_desktop.Arbol;
 using _OLC2_CQL_desktop.DML;
+using _OLC2_CQL_desktop.Structs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -108,13 +109,17 @@ namespace _OLC2_CQL_desktop.DDL
             {
                 return typeof(bool);
             }
-            if(columna.tipo.Equals(Tipos.DATE) || columna.tipo.Equals(Tipos.TIME))
+            if (columna.tipo.Equals(Tipos.DATE) || columna.tipo.Equals(Tipos.TIME))
             {
                 return typeof(DateTime);
             }
             if (columna.tipo.Equals(Tipos.STRING))
             {
                 return typeof(string);
+            }
+            if (columna.tipo.Equals(Tipos.OBJETO))
+            {
+                return typeof(Objeto);
             }
             return typeof(Nullable);
         }
