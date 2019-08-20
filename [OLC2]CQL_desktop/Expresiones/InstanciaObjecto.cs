@@ -27,7 +27,8 @@ namespace _OLC2_CQL_desktop.Expresiones
             {
                 object clave = cv.clave.GetValor(e);
                 object valor = cv.valor.GetValor(e);
-                atributosObjeto.Add(clave,valor);
+                Tipos tipo = cv.valor.GetTipo(e);
+                atributosObjeto.Insertar(new Simbolo(clave.ToString(),tipo,valor));
             }
             return new Objeto("", atributosObjeto);
         }

@@ -56,6 +56,7 @@
     <Compile Include="Arbol\NodoAST.cs" />
     <Compile Include="Arbol\Simbolo.cs" />
     <Compile Include="Arbol\Tipos.cs" />
+    <Compile Include="Clases\AccesoColumna.cs" />
     <Compile Include="Clases\ClaveValor.cs" />
     <Compile Include="DDL\Columna.cs" />
     <Compile Include="DDL\CreateTable.cs" />

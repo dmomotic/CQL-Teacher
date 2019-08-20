@@ -14,7 +14,27 @@ INSERT INTO Persona(edad,alumno) VALUES (30,{"nombre":"Karen", "carnet":2020});
 INSERT INTO Persona(edad,alumno) VALUES (10,{"nombre":"Monica", "carnet":2018});
 INSERT INTO Persona(edad,alumno) VALUES (18,{"nombre":"Pedro", "carnet":2016});
 
+SELECT edad, alumno.carnet FROM Persona;
+
+/*
+Create type Estudiante(
+	nombre string,
+	carnet int
+);
+
+CREATE TABLE Persona(
+	id counter PRIMARY KEY,
+	edad int,
+	alumno Estudiante
+);
+
+INSERT INTO Persona(edad,alumno) VALUES (20,{"nombre":"Diego", "carnet":2013});
+INSERT INTO Persona(edad,alumno) VALUES (30,{"nombre":"Karen", "carnet":2020});
+INSERT INTO Persona(edad,alumno) VALUES (10,{"nombre":"Monica", "carnet":2018});
+INSERT INTO Persona(edad,alumno) VALUES (18,{"nombre":"Pedro", "carnet":2016});
+
 SELECT * FROM Persona;
+*/
 
 /*
 CREATE TABLE Perro(

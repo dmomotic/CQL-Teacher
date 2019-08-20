@@ -389,10 +389,19 @@ namespace _OLC2_CQL_desktop.Inteprete
             if (SoyElNodo("SELECT", actual))
             {
                 int numero_hijos = actual.ChildNodes.Count;
-                // * NombreTabla
-                if (numero_hijos == 2)
+                
+                if(numero_hijos == 2)
                 {
                     string nombreTabla = GetLexema(actual, 1);
+
+                    //COLUMNAS_SELECT NombreTabla
+                    if (SoyElNodo("COLUMNAS_SELECT", actual.FirstChild))
+                    {
+                        LinkedList<AccesoColumna> columnas = (LinkedList<AccesoColumna>)Recorrer(actual.FirstChild);
+                        return new Select(nombreTabla, columnas);
+                    }
+
+                    // * NombreTabla
                     return new Select(nombreTabla);
                 }
             }
@@ -416,6 +425,36 @@ namespace _OLC2_CQL_desktop.Inteprete
                 return new ClaveValor(clave, valor);
             }
 
+            if (SoyElNodo("COLUMNAS_SELECT", actual))
+            {
+                LinkedList<AccesoColumna> accesosColumnas = new LinkedList<AccesoColumna>();
+                foreach(ParseTreeNode hijo in actual.ChildNodes)
+                {
+                    AccesoColumna accesoColumna = (AccesoColumna)Recorrer(hijo);
+                    accesosColumnas.AddLast(accesoColumna);
+                }
+                return accesosColumnas;
+            }
+
+            if (SoyElNodo("COLUMNA_SELECT", actual))
+            {
+                int numero_hijos = actual.ChildNodes.Count;
+                //id
+                if(numero_hijos == 1)
+                {
+                    string nombre = GetLexema(actual, 0);
+                    return new AccesoColumna(nombre);
+                }
+
+                //id ACCESOS_OBJETO
+                if(numero_hijos == 2)
+                {
+                    string nombre = GetLexema(actual, 0);
+                    LinkedList<string> atributos = (LinkedList<string>)Recorrer(actual.LastChild);
+                    return new AccesoColumna(nombre, atributos);
+                }
+            }
+            
             return null;
         }
 

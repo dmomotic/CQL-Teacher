@@ -143,7 +143,9 @@ namespace _OLC2_CQL_desktop.Inteprete
                 SELECT = new NonTerminal("SELECT"),
                 OBJECT_NOTATION = new NonTerminal("OBJECT_NOTATION"),
                 OBJECT_PAIRS = new NonTerminal("OBJECT_PAIRS"),
-                OBJECT_PAIR = new NonTerminal("OBJECT_PAIR")
+                OBJECT_PAIR = new NonTerminal("OBJECT_PAIR"),
+                COLUMNAS_SELECT = new NonTerminal("COLUMNAS_SELECT"),
+                COLUMNA_SELECT = new NonTerminal("COLUMNA_SELECT")
             ;
 
             #endregion
@@ -268,7 +270,15 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | r_insert + r_into + id + parizq + LISTA_IDS + parder + r_values + parizq + LISTA_EXPRESIONES + parder + ptocoma //ya
                 ;
 
-            SELECT.Rule = r_select + por + r_from + id + ptocoma;
+            SELECT.Rule = r_select + por + r_from + id + ptocoma //ya
+                | r_select + COLUMNAS_SELECT + r_from + id + ptocoma
+                ;
+
+            COLUMNAS_SELECT.Rule = MakePlusRule(COLUMNAS_SELECT, coma, COLUMNA_SELECT);
+
+            COLUMNA_SELECT.Rule = id
+                | id + ACCESOS_OBJETO
+                ;
 
             OBJECT_NOTATION.Rule = llavizq + OBJECT_PAIRS + llavder;
 
