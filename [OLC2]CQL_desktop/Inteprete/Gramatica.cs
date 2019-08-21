@@ -40,7 +40,12 @@ namespace _OLC2_CQL_desktop.Inteprete
                 r_where = ToTerm("where"),
                 r_counter = ToTerm("counter"),
                 r_map = ToTerm("map"),
-                r_get = ToTerm("get")
+                r_get = ToTerm("get"),
+                r_set = ToTerm("set"),
+                r_remove = ToTerm("remove"),
+                r_size = ToTerm("size"),
+                r_clear = ToTerm("clear"),
+                r_contains =ToTerm("contains")
             ;
 
             //Le indicamos al parser las palabras reservadas, para evitar conflictos al reconocer ids
@@ -75,7 +80,12 @@ namespace _OLC2_CQL_desktop.Inteprete
                 "where",
                 "counter",
                 "map",
-                "get"
+                "get",
+                "set",
+                "remove",
+                "size",
+                "clear",
+                "contains"
             );
 
             /*** SIMBOLOS DEL LENGUAJE ***/
@@ -158,7 +168,12 @@ namespace _OLC2_CQL_desktop.Inteprete
                 MAP = new NonTerminal("MAP"),
                 LLAMADA_METODO_FUNCION = new NonTerminal("LLAMADA_METODO_FUNCION"),
                 COLLECTION_INSERT = new NonTerminal("COLLECTION_INSERT"),
-                COLLECTION_GET = new NonTerminal("COLLECTION_GET")
+                COLLECTION_GET = new NonTerminal("COLLECTION_GET"),
+                COLLECTION_SET = new NonTerminal("COLLECTION_SET"),
+                COLLECTION_REMOVE = new NonTerminal("COLLECTION_REMOVE"),
+                COLLECTION_SIZE = new NonTerminal("COLLECTION_SIZE"),
+                COLLECTION_CLEAR = new NonTerminal("COLLECTION_CLEAR"),
+                COLLECTION_CONTAINS = new NonTerminal("COLLECTION_CONTAINS")
             ;
 
             #endregion
@@ -223,6 +238,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | llavizq + LISTA_EXPRESIONES + llavder //aux para asignacion de objetos
                 | OBJECT_NOTATION //para la creacion de objectos tipo { "llave":valor }
                 | COLLECTION_GET
+                | COLLECTION_SIZE
+                | COLLECTION_CONTAINS
                 ;
 
             LITERAL.Rule = entero //ya
@@ -311,6 +328,9 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             LLAMADA_METODO_FUNCION.Rule = arroba + id + punto + id + parizq + parder + ptocoma //@var.metodo()
                 | COLLECTION_INSERT
+                | COLLECTION_SET
+                | COLLECTION_REMOVE
+                | COLLECTION_CLEAR
                 ;
 
             COLLECTION_INSERT.Rule = arroba + id + punto + r_insert + parizq + LISTA_EXPRESIONES + parder + ptocoma //@var.Insert(par1, par2, par3)
@@ -319,6 +339,20 @@ namespace _OLC2_CQL_desktop.Inteprete
             COLLECTION_GET.Rule = arroba + id + punto + r_get + parizq + LISTA_EXPRESIONES + parder //@var.Get(valor)
                 ;
 
+            COLLECTION_SET.Rule = arroba + id + punto + r_set + parizq + LISTA_EXPRESIONES + parder + ptocoma //@var.Get(par1,par2);
+                ;
+
+            COLLECTION_REMOVE.Rule = arroba + id + punto + r_remove + parizq + LISTA_EXPRESIONES + parder + ptocoma //@var.Get(par1,par2);
+                ;
+
+            COLLECTION_SIZE.Rule = arroba + id + punto + r_size + parizq + parder  //@var.Size()
+                ;
+
+            COLLECTION_CLEAR.Rule = arroba + id + punto + r_clear + parizq + parder + ptocoma //@var.Clear();
+                ;
+
+            COLLECTION_CONTAINS.Rule = arroba + id + punto + r_contains + parizq + LISTA_EXPRESIONES + parder //@var.Contains(vals)
+                ;
 
             /*** PRECEDENCIAS ***/
             RegisterOperators(5, Associativity.Left, mas, menos);
@@ -329,7 +363,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 ptocoma, parizq, parder, arroba, igual, llavizq, llavder, coma, punto,
                 r_create, r_type, r_if, r_not, r_new, r_alter, r_delete, r_add,
                 r_print, r_table, r_key, r_insert, r_into, r_values, r_select, r_from, r_where, dosptos,
-                r_map, corizq, corder, r_get
+                r_map, corizq, corder, r_get, r_set, r_remove, r_size, r_clear, r_contains
             );
 
             /*** NODOS QUE NO ME SON DE UTILIDAD EN EL ARBOL ***/

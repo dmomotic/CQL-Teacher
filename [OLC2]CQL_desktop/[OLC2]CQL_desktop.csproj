@@ -77,8 +77,13 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="InstruccionesCollections\CollectionClear.cs" />
+    <Compile Include="InstruccionesCollections\CollectionContains.cs" />
     <Compile Include="InstruccionesCollections\CollectionGet.cs" />
     <Compile Include="InstruccionesCollections\CollectionInsert.cs" />
+    <Compile Include="InstruccionesCollections\CollectionRemove.cs" />
+    <Compile Include="InstruccionesCollections\CollectionSet.cs" />
+    <Compile Include="InstruccionesCollections\CollectionSize.cs" />
     <Compile Include="Instrucciones\Asignacion.cs" />
     <Compile Include="Instrucciones\Declaracion.cs" />
     <Compile Include="Instrucciones\Print.cs" />

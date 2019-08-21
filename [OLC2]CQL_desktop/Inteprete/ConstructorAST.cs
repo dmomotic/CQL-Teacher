@@ -505,6 +505,45 @@ namespace _OLC2_CQL_desktop.Inteprete
                 return new CollectionGet(id,valor);
             }
 
+            if (SoyElNodo("COLLECTION_SET", actual))
+            {
+                //id LISTA_EXPRESIONES
+                string id = GetLexema(actual, 0);
+                LinkedList<IExpresion> valores = (LinkedList<IExpresion>)Recorrer(actual.LastChild);
+                return new CollectionSet(id, valores
+);
+            }
+
+            if (SoyElNodo("COLLECTION_REMOVE", actual))
+            {
+                //id LISTA_EXPRESIONES
+                string id = GetLexema(actual, 0);
+                LinkedList<IExpresion> valores = (LinkedList<IExpresion>)Recorrer(actual.LastChild);
+                return new CollectionRemove(id, valores);
+            }
+
+            if (SoyElNodo("COLLECTION_SIZE", actual))
+            {
+                //id
+                string id = GetLexema(actual, 0);
+                return new CollectionSize(id);
+            }
+
+            if (SoyElNodo("COLLECTION_CLEAR", actual))
+            {
+                //id
+                string id = GetLexema(actual, 0);
+                return new CollectionClear(id);
+            }
+
+            if (SoyElNodo("COLLECTION_CONTAINS", actual))
+            {
+                //id LISTA_EXPRESIONES
+                string id = GetLexema(actual, 0);
+                LinkedList<IExpresion> valores = (LinkedList<IExpresion>)Recorrer(actual.LastChild);
+                return new CollectionContains(id, valores);
+            }
+
             return null;
         }
 

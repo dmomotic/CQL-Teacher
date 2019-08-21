@@ -4,6 +4,18 @@ Map @var2 = [1: "Diego", 2: "Karen", 3: "Pedro"];
 
 print(@var2.Get(2));
 
+@var2.Set(2, "Otro");
+print(@var2.Get(2));
+
+@var2.Remove(2);
+print(@var2.Get(2));
+
+print(@var2.Size());
+print(@var2.Contains(1));
+
+@var2.Clear();
+print(@var2.Size());
+print(@var2.Contains(1));
 
 /*
 Map @var1 = new Map<int, string>;

@@ -36,6 +36,31 @@ namespace _OLC2_CQL_desktop.Collections
             return valores[clave.ToString()] != null;
         }
 
+        public void Set(object clave, object valor)
+        {
+            Simbolo s = valores.Obtener(clave.ToString());
+            if(s!=null) s.valor = valor;
+        }
+
+        public void Remove(object clave)
+        {
+            valores.Remove(clave.ToString());
+        }
+
+        public int Size()
+        {
+            return valores.Count;
+        }
+
+        public void Clear()
+        {
+            valores.Clear();
+        }
+
+        public bool Contains(object clave)
+        {
+            return TieneLaClave(clave);
+        }
 
     }
 }
