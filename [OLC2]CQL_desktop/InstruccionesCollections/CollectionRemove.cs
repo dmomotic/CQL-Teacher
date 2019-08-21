@@ -35,6 +35,12 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                 }
                 map.Remove(clave);
             }
+            //Si es una list
+            else if(encontrado is ListCollection list)
+            {
+                object posicion = valores.First.Value.GetValor(e);
+                list.Remove(Convert.ToInt32(posicion));
+            }
         }
     }
 }

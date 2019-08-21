@@ -26,6 +26,7 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                 Console.WriteLine("No se encontro la collection: " + id + " para poder realizar la insercion");
                 return;
             }
+            //Si es un map
             if(encontrado is MapCollection map)
             {
                 //La lista solo puede tener dos valores: clave y valor
@@ -43,6 +44,18 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                 Object valor = valores.Last.Value.GetValor(e);
                 Tipos tipoValor = valores.Last.Value.GetTipo(e);
                 map.Insertar(clave,valor,tipoValor);
+            }
+            //Si es una List
+            else if(encontrado is ListCollection list)
+            {
+                //La lista solo puede tener un parametro
+                if (valores.Count != 1)
+                {
+                    Console.WriteLine("Error, para insertar en la list " + id + " solo se requiere un valor como parametro");
+                    return;
+                }
+                object valor = valores.First.Value.GetValor(e);
+                list.Insert(valor);
             }
         }
     }

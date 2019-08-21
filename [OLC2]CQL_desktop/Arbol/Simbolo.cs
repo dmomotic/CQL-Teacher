@@ -38,5 +38,10 @@
         {
             return tipo.Equals(Tipos.MAP);
         }
+
+        public bool IsList()
+        {
+            return tipo.Equals(Tipos.LIST);
+        }
     }
 }

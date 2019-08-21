@@ -1,3 +1,25 @@
+List @var1 = new List<string>;
+List @var2 = ["diego","monica","andrea","juan"];
+@var1.Insert("primero");
+@var2.Insert("ultimo");
+
+print("Lista 1: " + @var1.Get(0));
+print("Lista 2: " + @var2.Get(0));
+
+@var1.Set(0,"cambio");
+print("Lista 1: " + @var1.Get(0));
+
+@var2.Remove(0);
+print("Lista 2: " + @var2.Get(0));
+
+print("Lista 2 size: " + @var2.Size());
+@var2.Clear();
+print("Lista 2 size despues del clear: " + @var2.Size());
+
+print("Lista 1 contiene a cambio: " + @var1.Contains("cambio"));
+print("Lista 1 contiene a Diego: " + @var1.Contains("Diego"));
+
+/*
 Map @var2 = [1: "Diego", 2: "Karen", 3: "Pedro"];
 @var2.Insert(4,"Monica");
 @var2.Insert(2,"Juan");
@@ -16,6 +38,7 @@ print(@var2.Contains(1));
 @var2.Clear();
 print(@var2.Size());
 print(@var2.Contains(1));
+*/
 
 /*
 Map @var1 = new Map<int, string>;

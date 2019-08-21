@@ -45,7 +45,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 r_remove = ToTerm("remove"),
                 r_size = ToTerm("size"),
                 r_clear = ToTerm("clear"),
-                r_contains =ToTerm("contains")
+                r_contains = ToTerm("contains"),
+                r_list = ToTerm("list")
             ;
 
             //Le indicamos al parser las palabras reservadas, para evitar conflictos al reconocer ids
@@ -85,7 +86,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 "remove",
                 "size",
                 "clear",
-                "contains"
+                "contains",
+                "list"
             );
 
             /*** SIMBOLOS DEL LENGUAJE ***/
@@ -173,7 +175,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 COLLECTION_REMOVE = new NonTerminal("COLLECTION_REMOVE"),
                 COLLECTION_SIZE = new NonTerminal("COLLECTION_SIZE"),
                 COLLECTION_CLEAR = new NonTerminal("COLLECTION_CLEAR"),
-                COLLECTION_CONTAINS = new NonTerminal("COLLECTION_CONTAINS")
+                COLLECTION_CONTAINS = new NonTerminal("COLLECTION_CONTAINS"),
+                LIST = new NonTerminal("LIST")
             ;
 
             #endregion
@@ -320,10 +323,15 @@ namespace _OLC2_CQL_desktop.Inteprete
             OBJECT_PAIR.Rule = EXPRESION + dosptos + EXPRESION;
 
             INSTRUCCION_FCL.Rule = MAP
+                | LIST
                 ;
 
             MAP.Rule = r_map + LISTA_IDS_ARR + igual + r_new + r_map + menque + TIPO_DATO + coma + TIPO_DATO + mayque + ptocoma
                 | r_map + LISTA_IDS_ARR + igual + corizq + OBJECT_PAIRS + corder + ptocoma
+                ;
+
+            LIST.Rule = r_list + LISTA_IDS_ARR + igual + r_new + r_list + menque + TIPO_DATO + mayque + ptocoma
+                | r_list + LISTA_IDS_ARR + igual + corizq + LISTA_EXPRESIONES + corder + ptocoma
                 ;
 
             LLAMADA_METODO_FUNCION.Rule = arroba + id + punto + id + parizq + parder + ptocoma //@var.metodo()
@@ -363,7 +371,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 ptocoma, parizq, parder, arroba, igual, llavizq, llavder, coma, punto,
                 r_create, r_type, r_if, r_not, r_new, r_alter, r_delete, r_add,
                 r_print, r_table, r_key, r_insert, r_into, r_values, r_select, r_from, r_where, dosptos,
-                r_map, corizq, corder, r_get, r_set, r_remove, r_size, r_clear, r_contains
+                r_map, corizq, corder, r_get, r_set, r_remove, r_size, r_clear, r_contains, r_list
             );
 
             /*** NODOS QUE NO ME SON DE UTILIDAD EN EL ARBOL ***/

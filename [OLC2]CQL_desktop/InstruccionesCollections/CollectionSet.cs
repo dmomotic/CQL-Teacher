@@ -42,6 +42,18 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                 object valor = valores.Last.Value.GetValor(e);
                 map.Set(clave,valor);
             }
+            //Si es una list
+            else if(encontrado is ListCollection list)
+            {
+                if (valores.Count != 2)
+                {
+                    Console.WriteLine("Para realizar la operacion set sobre la list " + id + " solo se necesita la posicion y el valor");
+                    return;
+                }
+                object posicion = valores.First.Value.GetValor(e);
+                object valor = valores.Last.Value.GetValor(e);
+                list.Set(Convert.ToInt32(posicion), valor);
+            }
         }
     }
 }

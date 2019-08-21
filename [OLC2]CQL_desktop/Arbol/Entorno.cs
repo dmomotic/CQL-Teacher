@@ -49,6 +49,11 @@ namespace _OLC2_CQL_desktop.Arbol
             this.Add(identificador, map);
         }
 
+        public void InsertarList(string identificador, ListCollection list)
+        {
+            this.Add(identificador, list);
+        }
+
         public void ActualizarObjeto(string identificador, Objeto objeto)
         {
             for(Entorno e = this; e!=null; e = e.padre)

@@ -36,6 +36,12 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                 object clave = valores.First.Value.GetValor(e);
                 return map.Contains(clave);
             }
+            //si es una list
+            if(encontrado is ListCollection list)
+            {
+                object valor = valores.First.Value.GetValor(e);
+                return list.Contains(valor);
+            }
             return null;
         }
     }

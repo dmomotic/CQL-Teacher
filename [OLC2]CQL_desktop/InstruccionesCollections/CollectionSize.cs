@@ -32,6 +32,11 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
             {
                 return map.Size();
             }
+            //Si es una list
+            if(encontrado is ListCollection list)
+            {
+                return list.Size();
+            }
             return null;
         }
     }

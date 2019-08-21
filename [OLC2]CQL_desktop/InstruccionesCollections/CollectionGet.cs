@@ -44,6 +44,19 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                 //Si se obtuvo el valor del map
                 return res;
             }
+            //Si es una list
+            else if(encontrado is ListCollection list)
+            {
+                object posicion = valor.First.Value.GetValor(e);
+                object res = list.Get(Convert.ToInt32(posicion));
+                if(res == null)
+                {
+                    Console.WriteLine("La list " + id + " no tiene ningun valor en la posicion " + posicion);
+                    return null;
+                }
+                //Si se obtuvo el valor de la list
+                return res;
+            }
             return null;
         }
     }

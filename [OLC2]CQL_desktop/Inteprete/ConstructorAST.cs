@@ -544,6 +544,27 @@ namespace _OLC2_CQL_desktop.Inteprete
                 return new CollectionContains(id, valores);
             }
 
+            if (SoyElNodo("LIST", actual))
+            {
+                int numero_hijos = actual.ChildNodes.Count;
+
+                //LISTA_IDS_ARR < TIPO >
+                if(numero_hijos == 4)
+                {
+                    LinkedList<string> ids = GetIds(actual.FirstChild);
+                    Tipos tipo = GetTipo(actual.ChildNodes[2]);
+                    return new List(ids, tipo);
+                }
+
+                //LISTA_IDS_ARR LISTA_EXPRESIONES
+                if(numero_hijos == 2)
+                {
+                    LinkedList<string> ids = GetIds(actual.FirstChild);
+                    LinkedList<IExpresion> valores = (LinkedList<IExpresion>)Recorrer(actual.LastChild);
+                    return new List(ids, valores);
+                }
+            }
+
             return null;
         }
 

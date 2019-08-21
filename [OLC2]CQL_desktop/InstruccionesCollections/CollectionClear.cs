@@ -27,6 +27,11 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
             {
                 map.Clear();
             }
+            //Si es una list
+            else if(encontrado is ListCollection list)
+            {
+                list.Clear();
+            }
         }
     }
 }
