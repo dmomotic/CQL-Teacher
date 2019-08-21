@@ -1,4 +1,5 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
+using _OLC2_CQL_desktop.Structs;
 using System;
 
 namespace _OLC2_CQL_desktop.Expresiones
@@ -22,6 +23,10 @@ namespace _OLC2_CQL_desktop.Expresiones
                 return null;
             }
             //Si se encontro el simbolo
+            if(s is Objeto objeto)
+            {
+                return objeto.atributos;
+            }
             return s.valor;
         }
 
@@ -30,6 +35,8 @@ namespace _OLC2_CQL_desktop.Expresiones
             Simbolo s = e.Obtener(id);
             if (s != null)
             {
+                if (s is Objeto) return Tipos.OBJETO;
+
                 object valor = s.valor;
                 if (valor != null)
                 {

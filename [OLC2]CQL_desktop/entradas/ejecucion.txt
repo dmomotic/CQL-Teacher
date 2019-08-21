@@ -1,3 +1,20 @@
+Create type Persona(
+	nombre string,
+	edad int
+);
+
+Persona @persona1 = new Persona;
+@persona1.nombre = "Diego";
+@persona1.edad = 25;
+print(@persona1.nombre + " - " + @persona1.edad);
+
+Persona @persona2;
+@persona2 = @persona1;
+print(@persona2.nombre + " - " + @persona2.edad);
+
+//List @var1 = new List<Persona>;
+
+/*
 List @var1 = new List<string>;
 List @var2 = ["diego","monica","andrea","juan"];
 @var1.Insert("primero");
@@ -18,6 +35,7 @@ print("Lista 2 size despues del clear: " + @var2.Size());
 
 print("Lista 1 contiene a cambio: " + @var1.Contains("cambio"));
 print("Lista 1 contiene a Diego: " + @var1.Contains("Diego"));
+*/
 
 /*
 Map @var2 = [1: "Diego", 2: "Karen", 3: "Pedro"];

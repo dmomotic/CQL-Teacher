@@ -331,6 +331,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 ;
 
             LIST.Rule = r_list + LISTA_IDS_ARR + igual + r_new + r_list + menque + TIPO_DATO + mayque + ptocoma
+
                 | r_list + LISTA_IDS_ARR + igual + corizq + LISTA_EXPRESIONES + corder + ptocoma
                 ;
 

@@ -1,5 +1,6 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
 using _OLC2_CQL_desktop.Expresiones;
+using _OLC2_CQL_desktop.Structs;
 using System;
 
 namespace _OLC2_CQL_desktop.Instrucciones
@@ -58,6 +59,11 @@ namespace _OLC2_CQL_desktop.Instrucciones
                 return;
             }
             //Si se capturo un valor valido
+            if(simb is Objeto objeto && val is Entorno atributos)
+            {
+                objeto.atributos = atributos;
+                return;
+            }
             simb.valor = val;
         }
     }
