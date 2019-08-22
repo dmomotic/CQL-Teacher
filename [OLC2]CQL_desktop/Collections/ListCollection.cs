@@ -1,4 +1,5 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
+using _OLC2_CQL_desktop.Structs;
 using System.Collections.Generic;
 
 namespace _OLC2_CQL_desktop.Collections
@@ -46,6 +47,19 @@ namespace _OLC2_CQL_desktop.Collections
 
         public bool Contains(object valor)
         {
+            //Si son los atributos de un objeto
+            if(valor is Entorno atributos)
+            {
+                foreach(object val in valores)
+                {
+                    if(val is Objeto objeto)
+                    {
+                        if (objeto.atributos.Equals(atributos)) return true;
+                    }
+                }
+                return false;
+            }
+            //Si es un primitivo
             return valores.Contains(valor);
         }
         

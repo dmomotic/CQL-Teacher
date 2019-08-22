@@ -12,6 +12,13 @@ print(@var1.Size());
 Persona @p2 = @var1.Get(0);
 print(@p2.nombre + "-" + @p2.edad);
 
+print(@var1.contains(@p2));
+
+Persona @p3 = {"Karen", 19};
+@var1.Set(0,@p3);
+print(@var1.contains(@p2));
+print(@var1.contains(@p3));
+
 
 /*
 List @l1 = [1,2,3,4,5];

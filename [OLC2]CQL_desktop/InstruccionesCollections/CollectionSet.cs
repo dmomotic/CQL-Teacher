@@ -1,5 +1,6 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
 using _OLC2_CQL_desktop.Collections;
+using _OLC2_CQL_desktop.Structs;
 using System;
 using System.Collections.Generic;
 
@@ -52,7 +53,16 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                 }
                 object posicion = valores.First.Value.GetValor(e);
                 object valor = valores.Last.Value.GetValor(e);
-                list.Set(Convert.ToInt32(posicion), valor);
+                //Si es un objeto
+                if(valor is Entorno atributos && valores.Last.Value.GetTipo(e).Equals(Tipos.OBJETO))
+                {
+                    list.Set(Convert.ToInt32(posicion), new Objeto("", atributos));
+                }
+                //Si es un primitivo
+                else
+                {
+                    list.Set(Convert.ToInt32(posicion), valor);
+                }
             }
         }
     }
