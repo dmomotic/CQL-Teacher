@@ -71,6 +71,7 @@
     <Compile Include="Expresiones\Casteo.cs" />
     <Compile Include="Expresiones\Identificador.cs" />
     <Compile Include="Expresiones\InstanciaObjecto.cs" />
+    <Compile Include="Expresiones\Items.cs" />
     <Compile Include="Expresiones\Literal.cs" />
     <Compile Include="FCL\List.cs" />
     <Compile Include="FCL\Map.cs" />

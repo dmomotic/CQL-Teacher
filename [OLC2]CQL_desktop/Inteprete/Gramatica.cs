@@ -177,7 +177,9 @@ namespace _OLC2_CQL_desktop.Inteprete
                 COLLECTION_CLEAR = new NonTerminal("COLLECTION_CLEAR"),
                 COLLECTION_CONTAINS = new NonTerminal("COLLECTION_CONTAINS"),
                 LIST = new NonTerminal("LIST"),
-                SET = new NonTerminal("SET")
+                SET = new NonTerminal("SET"),
+                COLUMNA_LIST = new NonTerminal("COLUMNA_LIST"),
+                ITEMS = new NonTerminal("ITEMS")
             ;
 
             #endregion
@@ -245,6 +247,10 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | COLLECTION_GET
                 | COLLECTION_SIZE
                 | COLLECTION_CONTAINS
+                | ITEMS
+                ;
+
+            ITEMS.Rule = corizq + LISTA_EXPRESIONES + corder //utilizado para [items]
                 ;
 
             LITERAL.Rule = entero //ya
@@ -299,6 +305,10 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | id + id //ya
                 | r_primary + r_key + parizq + LISTA_IDS + parder //ya
                 | id + r_map + menque + TIPO_DATO + coma + TIPO_DATO + mayque
+                | COLUMNA_LIST
+                ;
+
+            COLUMNA_LIST.Rule = id + r_list + menque + TIPO_DATO + mayque
                 ;
 
             INSTRUCCION_DML.Rule = INSERT //ya

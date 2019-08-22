@@ -15,6 +15,11 @@ namespace _OLC2_CQL_desktop.Collections
             this.valores = new List<object>();
         }
 
+        public ListCollection(string identificador) : base (identificador, Tipos.LIST)
+        {
+
+        }
+
         public void Insert(object valor)
         {
             valores.Add(valor);
@@ -62,6 +67,17 @@ namespace _OLC2_CQL_desktop.Collections
             //Si es un primitivo
             return valores.Contains(valor);
         }
-        
+
+        public override string ToString()
+        {
+            string salida = "[ ";
+            foreach(object val in valores)
+            {
+                salida += val + " ";
+            }
+            salida += "]";
+            return salida;
+        }
+
     }
 }

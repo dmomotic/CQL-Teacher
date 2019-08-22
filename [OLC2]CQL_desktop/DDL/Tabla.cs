@@ -151,6 +151,15 @@ namespace _OLC2_CQL_desktop.DDL
                     };
                     myDataRow[celda.id] = map;
                 }
+                //Si es una lista el valor es una List<object>
+                else if(tipoColumna.Equals(typeof(ListCollection)) && celda.valor is List<object> valores)
+                {
+                    ListCollection list = new ListCollection("")
+                    {
+                        valores = valores
+                    };
+                    myDataRow[celda.id] = list;
+                }
                 else
                 {
                     myDataRow[celda.id] = celda.valor;

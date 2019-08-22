@@ -1,3 +1,21 @@
+CREATE TABLE jeans(
+	id int,
+	color string,
+	tallas list<string>
+);
+
+INSERT INTO jeans(id, color, tallas)
+	VALUES(1,"azul", ["S","M","L"]);
+INSERT INTO jeans(id, color, tallas)
+	VALUES(2,"verde", ["A","B","C"]);
+INSERT INTO jeans(id, color, tallas)
+	VALUES(3,"gris", ["D","E","F"]);
+INSERT INTO jeans(id, color, tallas)
+	VALUES(4,"rojo", ["I","H","G"]);
+
+SELECT * FROM jeans;
+
+/*
 Create Table Usuarios(
 	id string PRIMARY KEY,
 	nombre string,
@@ -12,6 +30,7 @@ INSERT INTO Usuarios(id,nombre,favoritos)
 	VALUES ("flopez", "Felipe", {"fruta": "Naranja", "verdura": "guicoy"});
 
 SELECT * FROM Usuarios;
+*/
 
 /*
 Set @var1 = new Set<string>;

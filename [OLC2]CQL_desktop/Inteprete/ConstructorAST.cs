@@ -385,6 +385,19 @@ namespace _OLC2_CQL_desktop.Inteprete
                     string nombre = GetLexema(actual, 0);
                     return new Columna(nombre, Tipos.MAP);
                 }
+
+                //COLUMNA_LIST
+                if(numero_hijos == 1)
+                {
+                    return Recorrer(actual.FirstChild);
+                }
+            }
+
+            if (SoyElNodo("COLUMNA_LIST", actual))
+            {
+                //id < tipo >
+                string nombre = GetLexema(actual, 0);
+                return new Columna(nombre, Tipos.LIST);
             }
 
             if (SoyElNodo("INSERT", actual))
@@ -609,6 +622,13 @@ namespace _OLC2_CQL_desktop.Inteprete
                     LinkedList<IExpresion> valores = (LinkedList<IExpresion>)Recorrer(actual.LastChild);
                     return new Set(ids, valores);
                 }
+            }
+
+            if (SoyElNodo("ITEMS", actual))
+            {
+                //LISTA_EXPRESIONES
+                LinkedList<IExpresion> valores = (LinkedList<IExpresion>)Recorrer(actual.FirstChild);
+                return new Items(valores);
             }
 
             return null;
