@@ -1,6 +1,7 @@
 ﻿
 using _OLC2_CQL_desktop.Arbol;
 using _OLC2_CQL_desktop.Collections;
+using _OLC2_CQL_desktop.Structs;
 using System;
 using System.Collections.Generic;
 
@@ -20,7 +21,10 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
 
         public Tipos GetTipo(Entorno e)
         {
-            return valor.First.Value.GetTipo(e);
+            Simbolo encontrado = e.Obtener(id);
+            if (encontrado is MapCollection map) return map.tipoValor;
+            if (encontrado is ListCollection list) return list.tipoLista;
+            return Tipos.NULL;
         }
 
         public object GetValor(Entorno e)
@@ -54,7 +58,12 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                     Console.WriteLine("La list " + id + " no tiene ningun valor en la posicion " + posicion);
                     return null;
                 }
-                //Si se obtuvo el valor de la list
+                //Si es un objeto
+                if(res is Objeto objeto)
+                {
+                    return objeto.atributos;
+                }
+                //Si es un primitivo
                 return res;
             }
             return null;

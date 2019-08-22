@@ -1,7 +1,9 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
+using _OLC2_CQL_desktop.Collections;
 using _OLC2_CQL_desktop.Expresiones;
 using _OLC2_CQL_desktop.Structs;
 using System;
+using System.Collections.Generic;
 
 namespace _OLC2_CQL_desktop.Instrucciones
 {
@@ -62,6 +64,11 @@ namespace _OLC2_CQL_desktop.Instrucciones
             if(simb is Objeto objeto && val is Entorno atributos)
             {
                 objeto.atributos = atributos;
+                return;
+            }
+            if(simb is ListCollection list && val is List<object> valores)
+            {
+                list.valores = valores;
                 return;
             }
             simb.valor = val;

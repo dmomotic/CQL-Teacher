@@ -1,5 +1,6 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
 using _OLC2_CQL_desktop.Collections;
+using _OLC2_CQL_desktop.Structs;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ namespace _OLC2_CQL_desktop.FCL
     class List : IInstruccion
     {
         readonly LinkedList<string> ids;
-        Tipos tipo;
+        public Tipos tipo;
         readonly LinkedList<IExpresion> valores;
 
         public List(LinkedList<string> ids, Tipos tipo)
@@ -68,7 +69,16 @@ namespace _OLC2_CQL_desktop.FCL
                     Console.WriteLine("No se puede insertar un tipo " + t + " en una lista tipo " + tipo);
                     continue;
                 }
-                list.Insert(valor);
+                //Si es un objeto
+                if(valor is Entorno atributos && t.Equals(Tipos.OBJETO))
+                {
+                    list.Insert(new Objeto("",atributos));
+                }
+                //Si es un primitivo
+                else
+                {
+                    list.Insert(valor);
+                }
             }
 
         }

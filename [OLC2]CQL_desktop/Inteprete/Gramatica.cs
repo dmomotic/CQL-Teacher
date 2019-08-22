@@ -224,6 +224,7 @@ namespace _OLC2_CQL_desktop.Inteprete
             DECLARACION.Rule = id + LISTA_IDS_ARR + ptocoma //Estudiante @est; - ya
                 | id + LISTA_IDS_ARR + igual + r_new + id + ptocoma // Estudiante @est = new Estudiante; - ya
                 | id + LISTA_IDS_ARR + igual + llavizq + LISTA_EXPRESIONES + llavder + ptocoma //Estudiante @est = {valores}; //primitivos ya
+                | id + LISTA_IDS_ARR + igual + EXPRESION + ptocoma // Est @est = lista.get(0);
                 | TIPO_DATO + LISTA_IDS_ARR + igual + EXPRESION + ptocoma //int @carnet = cualquiercosa; - primitivos ya
                 | TIPO_DATO + LISTA_IDS_ARR + ptocoma //int @carnet; - ya 
                 ;
@@ -331,7 +332,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                 ;
 
             LIST.Rule = r_list + LISTA_IDS_ARR + igual + r_new + r_list + menque + TIPO_DATO + mayque + ptocoma
-
+                | r_list + LISTA_IDS_ARR + igual + r_new + r_list + menque + id + mayque + ptocoma
                 | r_list + LISTA_IDS_ARR + igual + corizq + LISTA_EXPRESIONES + corder + ptocoma
                 ;
 

@@ -3,6 +3,30 @@ Create type Persona(
 	edad int
 );
 
+List @var1 = new List<Persona>;
+
+Persona @p1 = {"Diego",25};
+@var1.Insert(@p1);
+print(@var1.Size());
+
+Persona @p2 = @var1.Get(0);
+print(@p2.nombre + "-" + @p2.edad);
+
+
+/*
+List @l1 = [1,2,3,4,5];
+List @l2 = new List<int>;
+print(@l2.Size());
+@l2 = @l1;
+print(@l2.Size());
+*/
+
+/*
+Create type Persona(
+	nombre string,
+	edad int
+);
+
 Persona @persona1 = new Persona;
 @persona1.nombre = "Diego";
 @persona1.edad = 25;
@@ -11,6 +35,7 @@ print(@persona1.nombre + " - " + @persona1.edad);
 Persona @persona2;
 @persona2 = @persona1;
 print(@persona2.nombre + " - " + @persona2.edad);
+*/
 
 //List @var1 = new List<Persona>;
 

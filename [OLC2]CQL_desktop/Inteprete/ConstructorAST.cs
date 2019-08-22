@@ -138,6 +138,16 @@ namespace _OLC2_CQL_desktop.Inteprete
                         return new DeclaracionStruct(idStructGenerador, identificadores, asignaciones);
                     }
 
+                    //Estudiante LISTA_IDS_ARR CUALQUIER_EXPRESION
+                    if(SoyElNodo("id",actual.FirstChild) && SoyElNodo("LISTA_IDS_ARR", actual.ChildNodes[1]))
+                    {
+                        string idStructGenerador = GetLexema(actual, 0);
+                        LinkedList<IExpresion> asignaciones = new LinkedList<IExpresion>();
+                        IExpresion asig = (IExpresion)Recorrer(actual.LastChild);
+                        asignaciones.AddLast(asig);
+                        return new DeclaracionStruct(idStructGenerador,identificadores,asignaciones);
+                    }
+
                     //int LISTA_IDS_ARR EXP
                     Tipos tipo = GetTipo(actual.ChildNodes[0]);
                     IExpresion asignacion = (IExpresion)Recorrer(actual.ChildNodes[2]);
@@ -548,16 +558,25 @@ namespace _OLC2_CQL_desktop.Inteprete
             {
                 int numero_hijos = actual.ChildNodes.Count;
 
-                //LISTA_IDS_ARR < TIPO >
                 if(numero_hijos == 4)
                 {
                     LinkedList<string> ids = GetIds(actual.FirstChild);
-                    Tipos tipo = GetTipo(actual.ChildNodes[2]);
-                    return new List(ids, tipo);
+                    //LISTA_IDS_ARR < TIPO_DATO >
+                    if (SoyElNodo("TIPO_DATO", actual.ChildNodes[2]))
+                    {
+                        Tipos tipo = GetTipo(actual.ChildNodes[2]);
+                        return new List(ids, tipo);
+                    }
+                    //LISTA_IDS_ARR < ID >
+                    if (SoyElNodo("id", actual.ChildNodes[2]))
+                    {
+                        Tipos tipo = Tipos.OBJETO;
+                        return new List(ids, tipo);
+                    }
                 }
 
                 //LISTA_IDS_ARR LISTA_EXPRESIONES
-                if(numero_hijos == 2)
+                if (numero_hijos == 2)
                 {
                     LinkedList<string> ids = GetIds(actual.FirstChild);
                     LinkedList<IExpresion> valores = (LinkedList<IExpresion>)Recorrer(actual.LastChild);

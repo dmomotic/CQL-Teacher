@@ -1,6 +1,7 @@
 ﻿
 using _OLC2_CQL_desktop.Arbol;
 using _OLC2_CQL_desktop.Collections;
+using _OLC2_CQL_desktop.Structs;
 using System;
 using System.Collections.Generic;
 
@@ -55,7 +56,17 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                     return;
                 }
                 object valor = valores.First.Value.GetValor(e);
-                list.Insert(valor);
+                Tipos tipo = valores.First.Value.GetTipo(e);
+                //Si es un objeto
+                if(valor is Entorno atributos && tipo.Equals(Tipos.OBJETO))
+                {
+                    list.Insert(new Objeto("",atributos));
+                }
+                //Si es un primitivo
+                else
+                {
+                    list.Insert(valor);
+                }
             }
         }
     }

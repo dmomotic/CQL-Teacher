@@ -1,4 +1,5 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
+using _OLC2_CQL_desktop.Collections;
 using _OLC2_CQL_desktop.Structs;
 using System;
 
@@ -27,6 +28,10 @@ namespace _OLC2_CQL_desktop.Expresiones
             {
                 return objeto.atributos;
             }
+            if(s is ListCollection list)
+            {
+                return list.valores;
+            }
             return s.valor;
         }
 
@@ -36,6 +41,7 @@ namespace _OLC2_CQL_desktop.Expresiones
             if (s != null)
             {
                 if (s is Objeto) return Tipos.OBJETO;
+                if (s is ListCollection) return Tipos.LIST;
 
                 object valor = s.valor;
                 if (valor != null)

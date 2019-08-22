@@ -1,5 +1,7 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
+using _OLC2_CQL_desktop.Collections;
 using _OLC2_CQL_desktop.Expresiones;
+using _OLC2_CQL_desktop.Structs;
 using System;
 using System.Collections.Generic;
 
@@ -78,6 +80,19 @@ namespace _OLC2_CQL_desktop.Instrucciones
             if (valor == null)
             {
                 Console.WriteLine("El valor calculado en la asignacion del id " + id + " es null");
+                return;
+            }
+
+            //Si es un objeto
+            if(s is Objeto objeto && valor is Entorno atributos)
+            {
+                objeto.atributos = atributos;
+                return;
+            }
+            //Si es una List
+            if(s is ListCollection list && valor is List<object> valores)
+            {
+                list.valores = valores;
                 return;
             }
 

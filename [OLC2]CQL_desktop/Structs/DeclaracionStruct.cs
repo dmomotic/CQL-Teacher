@@ -75,6 +75,16 @@ namespace _OLC2_CQL_desktop.Structs
                 Objeto objeto = (Objeto)e.Obtener(identificador);
                 if (asignaciones.Count != objeto.GetNumeroDeAtributos())
                 {
+                    //Si solo viene una asignacion es posible que sea un objeto
+                    if(asignaciones.Count == 1)
+                    {
+                        //Si es un objeto
+                        if(asignaciones.First.Value.GetValor(e) is Entorno atributos && asignaciones.First.Value.GetTipo(e).Equals(Tipos.OBJETO))
+                        {
+                            objeto.atributos = atributos;
+                            return;
+                        }
+                    }
                     Console.WriteLine("El numero de parametros no coindice con la cantidad de atributos del objeto "  + identificador);
                     return;
                 }

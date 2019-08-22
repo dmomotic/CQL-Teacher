@@ -10,7 +10,7 @@ namespace _OLC2_CQL_desktop.FCL
     {
         readonly LinkedList<string> identificadores;
         readonly Tipos tipoClave;
-        readonly Tipos tipoValor;
+        Tipos tipoValor;
 
         //atributo utilizado cuando se le envian valores
         readonly LinkedList<ClaveValor> clavesValores;
@@ -53,7 +53,7 @@ namespace _OLC2_CQL_desktop.FCL
                     continue;
                 }
                 object valor = pair.valor.GetValor(e);
-                Tipos tipoValor = pair.valor.GetTipo(e);
+                tipoValor = pair.valor.GetTipo(e);
                 map.Insertar(clave, valor, tipoValor);
             }
         }

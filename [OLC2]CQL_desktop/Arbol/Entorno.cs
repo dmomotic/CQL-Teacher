@@ -88,7 +88,7 @@ namespace _OLC2_CQL_desktop.Arbol
                     return encontrado;
                 }
             }
-            Console.WriteLine("No se encontro la variable " + id + " en este entorno :(");
+            //Console.WriteLine("No se encontro la variable " + id + " en este entorno :(");
             return null;
         }
 
