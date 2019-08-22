@@ -296,8 +296,9 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             COLUMNA_TABLA.Rule = id + TIPO_DATO + r_primary + r_key //ya
                 | id + TIPO_DATO //ya
-                | id + id
-                | r_primary + r_key + parizq + LISTA_IDS + parder
+                | id + id //ya
+                | r_primary + r_key + parizq + LISTA_IDS + parder //ya
+                | id + r_map + menque + TIPO_DATO + coma + TIPO_DATO + mayque
                 ;
 
             INSTRUCCION_DML.Rule = INSERT //ya

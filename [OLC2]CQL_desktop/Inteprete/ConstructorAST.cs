@@ -378,6 +378,13 @@ namespace _OLC2_CQL_desktop.Inteprete
                         return new Columna(nombre, tipo);
                     }
                 }
+
+                //id < tipo tipo >
+                if (numero_hijos == 5)
+                {
+                    string nombre = GetLexema(actual, 0);
+                    return new Columna(nombre, Tipos.MAP);
+                }
             }
 
             if (SoyElNodo("INSERT", actual))

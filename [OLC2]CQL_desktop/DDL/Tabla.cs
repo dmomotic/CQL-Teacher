@@ -1,6 +1,8 @@
 ﻿
 using _OLC2_CQL_desktop.Arbol;
+using _OLC2_CQL_desktop.Collections;
 using _OLC2_CQL_desktop.DML;
+using _OLC2_CQL_desktop.Expresiones;
 using _OLC2_CQL_desktop.Structs;
 using System;
 using System.Collections.Generic;
@@ -121,6 +123,14 @@ namespace _OLC2_CQL_desktop.DDL
             {
                 return typeof(Objeto);
             }
+            if (columna.tipo.Equals(Tipos.MAP))
+            {
+                return typeof(MapCollection);
+            }
+            if (columna.tipo.Equals(Tipos.LIST))
+            {
+                return typeof(ListCollection);
+            }
             return typeof(Nullable);
         }
 
@@ -128,10 +138,24 @@ namespace _OLC2_CQL_desktop.DDL
         {
             DataRow myDataRow = data.NewRow();
             string registro = "";
-            foreach(Celda celda in celdas)
+            foreach (Celda celda in celdas)
             {
-                myDataRow[celda.id] = celda.valor;
-                registro += celda.valor + " ";
+                //Si es un map viene en un objeto
+                Type tipoColumna = myDataRow.Table.Columns[celda.id].DataType;
+                if (tipoColumna.Equals(typeof(MapCollection)) && celda.valor is Objeto objeto)
+                {
+                    //Aqui debo generar el MapCollection
+                    MapCollection map = new MapCollection("")
+                    {
+                        valores = objeto.atributos
+                    };
+                    myDataRow[celda.id] = map;
+                }
+                else
+                {
+                    myDataRow[celda.id] = celda.valor;
+                    registro += celda.valor + " ";
+                }
             }
             try
             {

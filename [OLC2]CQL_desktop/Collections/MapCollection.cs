@@ -1,5 +1,6 @@
 ﻿using _OLC2_CQL_desktop.Arbol;
 using _OLC2_CQL_desktop.Clases;
+using System.Collections;
 
 namespace _OLC2_CQL_desktop.Collections
 {
@@ -15,6 +16,11 @@ namespace _OLC2_CQL_desktop.Collections
             valores = new Entorno();
             this.tipoClave = tipoClave;
             this.tipoValor = tipoValor;
+        }
+
+        public MapCollection(string identificador) : base(identificador, Tipos.MAP)
+        {
+
         }
 
         public void Insertar(object clave, object valor, Tipos tipoValor)
@@ -60,6 +66,21 @@ namespace _OLC2_CQL_desktop.Collections
         public bool Contains(object clave)
         {
             return TieneLaClave(clave);
+        }
+
+        public override string ToString()
+        {
+            string salida = "{";
+            foreach(DictionaryEntry pair in valores)
+            {
+                if (pair.Key is Simbolo sim) salida += sim.valor + ": ";
+                else salida += pair.Key + ": ";
+
+                if (pair.Value is Simbolo val) salida += val.valor + " ";
+                else salida += pair.Value + " ";
+            }
+            salida += "}";
+            return salida;
         }
 
     }

@@ -1,3 +1,18 @@
+Create Table Usuarios(
+	id string PRIMARY KEY,
+	nombre string,
+	favoritos Map<String, String>
+);
+
+INSERT INTO Usuarios(id,nombre,favoritos)
+	VALUES ("dmomotic", "Diego", {"fruta": "Manzana", "verdura": "tomate"});
+INSERT INTO Usuarios(id,nombre,favoritos)
+	VALUES ("kmendoza", "Karen", {"fruta": "Uva", "verdura": "papa"});
+INSERT INTO Usuarios(id,nombre,favoritos)
+	VALUES ("flopez", "Felipe", {"fruta": "Naranja", "verdura": "guicoy"});
+
+SELECT * FROM Usuarios;
+
 /*
 Set @var1 = new Set<string>;
 Set @var2 = ["Andrea","Brandon","Carlos"];
