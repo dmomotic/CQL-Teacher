@@ -41,6 +41,12 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                 object posicion = valores.First.Value.GetValor(e);
                 list.Remove(Convert.ToInt32(posicion));
             }
+            //Si es un set
+            else if(encontrado is SetCollection set)
+            {
+                object posicion = valores.First.Value.GetValor(e);
+                set.Remove(Convert.ToInt32(posicion));
+            }
         }
     }
 }

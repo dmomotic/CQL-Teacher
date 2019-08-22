@@ -176,7 +176,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 COLLECTION_SIZE = new NonTerminal("COLLECTION_SIZE"),
                 COLLECTION_CLEAR = new NonTerminal("COLLECTION_CLEAR"),
                 COLLECTION_CONTAINS = new NonTerminal("COLLECTION_CONTAINS"),
-                LIST = new NonTerminal("LIST")
+                LIST = new NonTerminal("LIST"),
+                SET = new NonTerminal("SET")
             ;
 
             #endregion
@@ -325,6 +326,7 @@ namespace _OLC2_CQL_desktop.Inteprete
 
             INSTRUCCION_FCL.Rule = MAP
                 | LIST
+                | SET
                 ;
 
             MAP.Rule = r_map + LISTA_IDS_ARR + igual + r_new + r_map + menque + TIPO_DATO + coma + TIPO_DATO + mayque + ptocoma
@@ -334,6 +336,11 @@ namespace _OLC2_CQL_desktop.Inteprete
             LIST.Rule = r_list + LISTA_IDS_ARR + igual + r_new + r_list + menque + TIPO_DATO + mayque + ptocoma
                 | r_list + LISTA_IDS_ARR + igual + r_new + r_list + menque + id + mayque + ptocoma
                 | r_list + LISTA_IDS_ARR + igual + corizq + LISTA_EXPRESIONES + corder + ptocoma
+                ;
+
+            SET.Rule = r_set + LISTA_IDS_ARR + igual + r_new + r_set + menque + TIPO_DATO + mayque + ptocoma
+                | r_set + LISTA_IDS_ARR + igual + r_new + r_set + menque + id + mayque + ptocoma
+                | r_set + LISTA_IDS_ARR + igual + corizq + LISTA_EXPRESIONES + corder + ptocoma
                 ;
 
             LLAMADA_METODO_FUNCION.Rule = arroba + id + punto + id + parizq + parder + ptocoma //@var.metodo()
@@ -349,10 +356,10 @@ namespace _OLC2_CQL_desktop.Inteprete
             COLLECTION_GET.Rule = arroba + id + punto + r_get + parizq + LISTA_EXPRESIONES + parder //@var.Get(valor)
                 ;
 
-            COLLECTION_SET.Rule = arroba + id + punto + r_set + parizq + LISTA_EXPRESIONES + parder + ptocoma //@var.Get(par1,par2);
+            COLLECTION_SET.Rule = arroba + id + punto + r_set + parizq + LISTA_EXPRESIONES + parder + ptocoma //@var.Set(par1,par2);
                 ;
 
-            COLLECTION_REMOVE.Rule = arroba + id + punto + r_remove + parizq + LISTA_EXPRESIONES + parder + ptocoma //@var.Get(par1,par2);
+            COLLECTION_REMOVE.Rule = arroba + id + punto + r_remove + parizq + LISTA_EXPRESIONES + parder + ptocoma //@var.Remove(par1,par2);
                 ;
 
             COLLECTION_SIZE.Rule = arroba + id + punto + r_size + parizq + parder  //@var.Size()

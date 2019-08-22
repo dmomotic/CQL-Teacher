@@ -28,14 +28,19 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                 return null;
             }
             //Si es un map
-            if(encontrado is MapCollection map)
+            if (encontrado is MapCollection map)
             {
                 return map.Size();
             }
             //Si es una list
-            if(encontrado is ListCollection list)
+            if (encontrado is ListCollection list)
             {
                 return list.Size();
+            }
+            //Si es un set
+            if (encontrado is SetCollection set)
+            {
+                return set.Size();
             }
             return null;
         }

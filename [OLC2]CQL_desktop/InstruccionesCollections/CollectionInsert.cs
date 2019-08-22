@@ -68,6 +68,40 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                     list.Insert(valor);
                 }
             }
+            //Si es un Set
+            else if(encontrado is SetCollection set)
+            {
+                //El set solo puede tener un parametro
+                if (valores.Count != 1)
+                {
+                    Console.WriteLine("Error, para insertar en el set " + id + " solo se requiere un valor como parametro");
+                    return;
+                }
+                object valor = valores.First.Value.GetValor(e);
+                Tipos tipo = valores.First.Value.GetTipo(e);
+                //Si es un objeto
+                if(valor is Entorno atributos && tipo.Equals(Tipos.OBJETO))
+                {
+                    //Inserto solo si no se encuentra ya en la lista
+                    if (set.Contains(atributos))
+                    {
+                        Console.WriteLine("Error no se pueden insertar datos duplicados al set " + id);
+                        return;
+                    }
+                    set.Insert(new Objeto("", atributos));
+                }
+                //Si es un primitivo
+                else
+                {
+                    //Inserto solo si no se encuentra ya en la lista
+                    if (set.Contains(valor))
+                    {
+                        Console.WriteLine("Error no se pueden insertar datos duplicados al set " + id);
+                        return;
+                    }
+                    set.Insert(valor);
+                }
+            }
         }
     }
 }

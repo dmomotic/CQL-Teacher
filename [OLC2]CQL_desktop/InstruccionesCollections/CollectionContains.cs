@@ -42,6 +42,12 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                 object valor = valores.First.Value.GetValor(e);
                 return list.Contains(valor);
             }
+            //Si es un Set
+            if(encontrado is SetCollection set)
+            {
+                object valor = valores.First.Value.GetValor(e);
+                return set.Contains(valor);
+            }
             return null;
         }
     }

@@ -1,7 +1,23 @@
+/*
+Set @var1 = new Set<string>;
+Set @var2 = ["Andrea","Brandon","Carlos"];
+
+print("Primera posicion: " + @var2.Get(0));
+@var2.Insert("Alejandra");
+print("Primera posicion: " + @var2.Get(0));
+
+@var1.Insert("hola");
+@var1.Insert("bote");
+print("Primera posicion: " + @var1.Get(0));
+@var1.Insert("hola");
+*/
+
+/*
 Create type Persona(
 	nombre string,
 	edad int
 );
+
 
 List @var1 = new List<Persona>;
 
@@ -18,7 +34,7 @@ Persona @p3 = {"Karen", 19};
 @var1.Set(0,@p3);
 print(@var1.contains(@p2));
 print(@var1.contains(@p3));
-
+*/
 
 /*
 List @l1 = [1,2,3,4,5];

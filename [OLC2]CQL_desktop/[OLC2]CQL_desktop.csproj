@@ -60,6 +60,7 @@
     <Compile Include="Clases\ClaveValor.cs" />
     <Compile Include="Collections\ListCollection.cs" />
     <Compile Include="Collections\MapCollection.cs" />
+    <Compile Include="Collections\SetCollection.cs" />
     <Compile Include="DDL\Columna.cs" />
     <Compile Include="DDL\CreateTable.cs" />
     <Compile Include="DDL\Tabla.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Expresiones\Literal.cs" />
     <Compile Include="FCL\List.cs" />
     <Compile Include="FCL\Map.cs" />
+    <Compile Include="FCL\Set.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

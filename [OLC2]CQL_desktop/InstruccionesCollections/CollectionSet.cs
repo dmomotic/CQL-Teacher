@@ -64,6 +64,27 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                     list.Set(Convert.ToInt32(posicion), valor);
                 }
             }
+            //Si es un set
+            else if(encontrado is SetCollection set)
+            {
+                if (valores.Count != 2)
+                {
+                    Console.WriteLine("Para realizar la operacion set sobre la collection Set " + id + " solo se necesita la posicion y el valor");
+                    return;
+                }
+                object posicion = valores.First.Value.GetValor(e);
+                object valor = valores.Last.Value.GetValor(e);
+                //Si es un objeto
+                if (valor is Entorno atributos && valores.Last.Value.GetTipo(e).Equals(Tipos.OBJETO))
+                {
+                    set.Set(Convert.ToInt32(posicion), new Objeto("", atributos));
+                }
+                //Si es un primitivo
+                else
+                {
+                    set.Set(Convert.ToInt32(posicion), valor);
+                }
+            }
         }
     }
 }

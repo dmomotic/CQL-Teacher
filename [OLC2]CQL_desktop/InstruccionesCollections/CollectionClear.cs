@@ -32,6 +32,11 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
             {
                 list.Clear();
             }
+            //Si es un Set
+            else if(encontrado is SetCollection set)
+            {
+                set.Clear();
+            }
         }
     }
 }

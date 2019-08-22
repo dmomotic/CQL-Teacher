@@ -66,6 +66,24 @@ namespace _OLC2_CQL_desktop.InstruccionesCollections
                 //Si es un primitivo
                 return res;
             }
+            //Si es un set
+            else if(encontrado is SetCollection set)
+            {
+                object posicion = valor.First.Value.GetValor(e);
+                object res = set.Get(Convert.ToInt32(posicion));
+                if (res == null)
+                {
+                    Console.WriteLine("El set " + id + " no tiene ningun valor en la posicion " + posicion);
+                    return null;
+                }
+                //Si es un objeto
+                if (res is Objeto objeto)
+                {
+                    return objeto.atributos;
+                }
+                //Si es un primitivo
+                return res;
+            }
             return null;
         }
     }

@@ -584,6 +584,26 @@ namespace _OLC2_CQL_desktop.Inteprete
                 }
             }
 
+            if (SoyElNodo("SET", actual))
+            {
+                int numero_hijos = actual.ChildNodes.Count;
+                //LISTA_IDS_ARR < tipo >
+                if(numero_hijos == 4)
+                {
+                    LinkedList<string> ids = GetIds(actual.FirstChild);
+                    Tipos tipo = GetTipo(actual.ChildNodes[2]);
+                    return new Set(ids, tipo);
+                }
+
+                //LISTA_IDS_ARR LISTA_EXPRESIONES
+                if(numero_hijos == 2)
+                {
+                    LinkedList<string> ids = GetIds(actual.FirstChild);
+                    LinkedList<IExpresion> valores = (LinkedList<IExpresion>)Recorrer(actual.LastChild);
+                    return new Set(ids, valores);
+                }
+            }
+
             return null;
         }
 
