@@ -179,7 +179,8 @@ namespace _OLC2_CQL_desktop.Inteprete
                 LIST = new NonTerminal("LIST"),
                 SET = new NonTerminal("SET"),
                 COLUMNA_LIST = new NonTerminal("COLUMNA_LIST"),
-                ITEMS = new NonTerminal("ITEMS")
+                ITEMS = new NonTerminal("ITEMS"),
+                COLUMNA_SET = new NonTerminal("COLUMNA_SET")
             ;
 
             #endregion
@@ -306,9 +307,13 @@ namespace _OLC2_CQL_desktop.Inteprete
                 | r_primary + r_key + parizq + LISTA_IDS + parder //ya
                 | id + r_map + menque + TIPO_DATO + coma + TIPO_DATO + mayque
                 | COLUMNA_LIST
+                | COLUMNA_SET
                 ;
 
             COLUMNA_LIST.Rule = id + r_list + menque + TIPO_DATO + mayque
+                ;
+
+            COLUMNA_SET.Rule = id + r_set + menque + TIPO_DATO + mayque
                 ;
 
             INSTRUCCION_DML.Rule = INSERT //ya

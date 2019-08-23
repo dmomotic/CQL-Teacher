@@ -1,3 +1,27 @@
+CREATE TYPE Estudiante(
+	id int,
+	nombre string
+);
+
+Estudiante @est = {5,"Diego"};
+print(@est.id + " - " + @est.nombre);
+
+CREATE TABLE tweets(
+	id int, 
+	texto string,
+	tags set<string>
+);
+
+INSERT INTO tweets(id, texto, tags)
+	VALUES (1,"Iniciando proyecto", {"#HoySiSale", "#PrimerProyecto"});
+INSERT INTO tweets(id, texto, tags)
+	VALUES (2,"Proyecto a medias", {"#HoySiSale2", "#PrimerProyecto2"});
+INSERT INTO tweets(id, texto, tags)
+	VALUES (3,"Fin proyecto", {"#HoySiSale3", "#PrimerProyecto3"});
+
+SELECT * FROM tweets;
+
+/*
 CREATE TABLE jeans(
 	id int,
 	color string,
@@ -14,6 +38,7 @@ INSERT INTO jeans(id, color, tallas)
 	VALUES(4,"rojo", ["I","H","G"]);
 
 SELECT * FROM jeans;
+*/
 
 /*
 Create Table Usuarios(

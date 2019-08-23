@@ -272,8 +272,18 @@ namespace _OLC2_CQL_desktop.Inteprete
                 LinkedList<IExpresion> expresiones = new LinkedList<IExpresion>();
                 foreach(ParseTreeNode hijo in actual.ChildNodes)
                 {
-                    IExpresion exp = (IExpresion)Recorrer(hijo);
-                    expresiones.AddLast(exp);
+                    //Validaciones para diferenciar el uso se {items}
+                    object val = Recorrer(hijo);
+                    if(val is LinkedList<IExpresion> items)
+                    {
+                        Items i = new Items(items, true);
+                        expresiones.AddLast(i);
+                    }
+                    else
+                    {
+                        IExpresion exp = (IExpresion)val;
+                        expresiones.AddLast(exp);
+                    }
                 }
                 return expresiones;
             }
@@ -386,7 +396,7 @@ namespace _OLC2_CQL_desktop.Inteprete
                     return new Columna(nombre, Tipos.MAP);
                 }
 
-                //COLUMNA_LIST
+                //COLUMNA_LIST || COLUMNA_SET
                 if(numero_hijos == 1)
                 {
                     return Recorrer(actual.FirstChild);
@@ -398,6 +408,13 @@ namespace _OLC2_CQL_desktop.Inteprete
                 //id < tipo >
                 string nombre = GetLexema(actual, 0);
                 return new Columna(nombre, Tipos.LIST);
+            }
+
+            if (SoyElNodo("COLUMNA_SET", actual))
+            {
+                //id < tipo >
+                string nombre = GetLexema(actual, 0);
+                return new Columna(nombre, Tipos.SET);
             }
 
             if (SoyElNodo("INSERT", actual))

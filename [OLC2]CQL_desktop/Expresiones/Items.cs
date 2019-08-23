@@ -9,10 +9,17 @@ namespace _OLC2_CQL_desktop.Expresiones
 
         public Tipos tipoItems;
         readonly LinkedList<IExpresion> valores;
+        readonly bool isSet;
 
         public Items(LinkedList<IExpresion> valores)
         {
             this.valores = valores;
+        }
+
+        public Items(LinkedList<IExpresion> valores, bool isSet)
+        {
+            this.valores = valores;
+            this.isSet = isSet;
         }
 
         public Tipos GetTipo(Entorno e)
@@ -27,6 +34,7 @@ namespace _OLC2_CQL_desktop.Expresiones
             {
                 list.Add(valor.GetValor(e));
             }
+            if (isSet) list.Sort();
             return list;
         }
     }

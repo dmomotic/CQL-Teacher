@@ -131,6 +131,10 @@ namespace _OLC2_CQL_desktop.DDL
             {
                 return typeof(ListCollection);
             }
+            if (columna.tipo.Equals(Tipos.SET))
+            {
+                return typeof(SetCollection);
+            }
             return typeof(Nullable);
         }
 
@@ -159,6 +163,15 @@ namespace _OLC2_CQL_desktop.DDL
                         valores = valores
                     };
                     myDataRow[celda.id] = list;
+                }
+                //Si es un set el valor es una List<object>
+                else if(tipoColumna.Equals(typeof(SetCollection)) && celda.valor is List<object> vals)
+                {
+                    SetCollection set = new SetCollection("")
+                    {
+                        valores = vals
+                    };
+                    myDataRow[celda.id] = set;
                 }
                 else
                 {
